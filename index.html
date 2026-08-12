@@ -320,6 +320,21 @@
       #g-grid.plantas-mode .g-card.cob-card { grid-column: span 1; }
     }
 
+    /* Categoria com um único card de abas (ex.: Implantações) — ocupa toda
+       a área disponível da tela em vez de ficar preso a 1 de 2 colunas com
+       altura fixa, aproveitando o espaço vazio para ver a planta maior. */
+    #g-grid.plantas-mode.single-plan {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+    #g-grid.plantas-mode.single-plan .g-card.cob-card {
+      flex: 1;
+      width: 100%;
+      height: auto;
+      min-height: 520px;
+    }
+
     .cob-header {
       display: flex;
       align-items: center;
@@ -1004,6 +1019,7 @@ const st = {
   lbItems: [],
   lbIdx:   -1,
   lbDual:  false,
+  lbToken: 0,   // invalida upgrades de imagem HR de navegações já ultrapassadas
 };
 
 const $ = id => document.getElementById(id);
@@ -1117,6 +1133,7 @@ function renderGallery() {
   const doRender = () => {
     elGrid.innerHTML = '';
     elGrid.classList.toggle('plantas-mode', MODE === 'plantas');
+    elGrid.classList.toggle('single-plan', items.length === 1 && items[0].type === 'cobertura-plan');
     elEmpty.classList.remove('show');
     st.lbItems = items.filter(i => i.type === 'image');
     if (!items.length) { elEmpty.classList.add('show'); return; }
@@ -1273,6 +1290,41 @@ function buildCobCard(item) {
 }
 
 // ── lightbox ─────────────────────────────────────────────────────
+
+// Aquece o cache do browser com uma imagem (dispara o fetch sem afetar o DOM).
+// Usado para: (1) já ter os vizinhos prontos antes do clique em prev/next,
+// e (2) começar a baixar a versão HR em paralelo com a animação, em vez de
+// só disparar o fetch no instante da troca de src.
+const _lbWarm = new Set();
+function warmImage(src) {
+  if (!src || _lbWarm.has(src)) return;
+  _lbWarm.add(src);
+  const im = new Image();
+  im.src = src;
+}
+function warmLbNeighbors() {
+  [st.lbIdx - 1, st.lbIdx + 1].forEach(i => {
+    const it = st.lbItems[i];
+    if (!it) return;
+    if (it.thumb) warmImage(it.thumb);
+    warmImage(it.src);
+  });
+}
+
+// Aplica a imagem no <img> do lightbox com upgrade progressivo: mostra o
+// thumb (já em cache da grade, ~100 KB) na hora — a imagem certa aparece
+// imediatamente, sem a anterior ficar "grudada" na tela — e troca para a
+// versão HR assim que ela termina de carregar, em silêncio. `token` invalida
+// o upgrade se o usuário já tiver navegado para outra imagem nesse meio-tempo.
+function setLbSrc(src, thumb, token) {
+  const placeholder = (thumb && thumb !== src) ? thumb : src;
+  elLbImg.src = placeholder;
+  if (placeholder === src) return;
+  const hi = new Image();
+  hi.onload = () => { if (st.lbToken === token) elLbImg.src = src; };
+  hi.src = src;
+}
+
 function showLb() {
   elLightbox.classList.add('open');
   document.addEventListener('keydown', onLbKey);
@@ -1295,9 +1347,12 @@ function openLbFloor(item, fi) {
   elLbImg.style.display = '';
   elLbPrev.style.display = 'none';
   elLbNext.style.display = 'none';
-  elLbImg.src = item.floors[fi].src;
+  const floor = item.floors[fi];
+  const token = ++st.lbToken;
+  elLbImg.style.opacity = '1';
+  setLbSrc(floor.src, floor.thumb, token);
   elLbTitle.textContent = item.title;
-  elLbSub.textContent = item.floors[fi].label;
+  elLbSub.textContent = floor.label;
   elLbCounter.textContent = '';
   elLbNotice.textContent = 'As plantas pertencem à mesma unidade';
   showLb();
@@ -1350,8 +1405,17 @@ function updateLb(dir) {
   if (st._lbSwapT) clearTimeout(st._lbSwapT);
   elLbImg.classList.remove('o-next','o-prev','i-next','i-prev','i-fade');
 
+  // Dispara o carregamento (thumb + HR) JÁ, em paralelo com a animação de
+  // saída, em vez de esperar o fim dela — é isso que fazia a troca de
+  // imagem parecer lenta e a imagem anterior "grudar" na tela: o fetch só
+  // começava no instante da troca de src, não antes.
+  const token = ++st.lbToken;
+  warmImage(item.thumb);
+  warmImage(item.src);
+
   const swap = () => {
-    elLbImg.src = item.src;
+    if (st.lbToken !== token) return;   // uma navegação mais nova já assumiu
+    setLbSrc(item.src, item.thumb, token);
     elLbImg.style.opacity = '1';
     elLbImg.classList.remove('o-next','o-prev');
     void elLbImg.offsetWidth; // reinicia a animação
@@ -1362,11 +1426,13 @@ function updateLb(dir) {
     // fase 1: imagem atual desliza para fora no sentido da navegação
     void elLbImg.offsetWidth;
     elLbImg.classList.add(dir === 1 ? 'o-next' : 'o-prev');
-    st._lbSwapT = setTimeout(swap, 150);   // fase 2: nova entra pelo lado oposto
+    st._lbSwapT = setTimeout(swap, 160);   // fase 2: nova entra pelo lado oposto
   } else {
     elLbImg.style.opacity = '0';
-    st._lbSwapT = setTimeout(swap, 110);
+    st._lbSwapT = setTimeout(swap, 50);
   }
+
+  warmLbNeighbors();   // já deixa a próxima/anterior prontas em cache
 }
 
 function navLb(dir) {
