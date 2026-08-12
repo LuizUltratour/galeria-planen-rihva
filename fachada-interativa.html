@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Fachada Interativa — Nuar Residence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #E6E2DC;            /* areia */
+      --surface: #DCD6CC;
+      --dark: #442702;          /* marrom Tauf */
+      --text-soft: rgba(68,39,2,0.55);
+      --border: rgba(68,39,2,0.14);
+      --border-strong: rgba(68,39,2,0.30);
+      --accent: #442702;
+      --accent-soft: rgba(68,39,2,0.09);
+      --glow: rgba(120,78,26,0.55);
+      --white: #FFFFFF;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+      --spring: cubic-bezier(0.34, 1.4, 0.5, 1);
+    }
+
+    html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(--dark); font-family: var(--font-sans); }
+
+    #fi-root { display: flex; flex-direction: column; height: 100vh; }
+
+    /* ── HEADER ── */
+    #fi-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 24px;
+      padding-top: max(12px, env(safe-area-inset-top));
+      padding-left: max(24px, env(safe-area-inset-left));
+      padding-right: max(24px, env(safe-area-inset-right));
+      border-bottom: 1px solid var(--border); flex-shrink: 0; gap: 12px; z-index: 5;
+    }
+    #fi-brand { display: flex; flex-direction: column; line-height: 1.1; }
+    #fi-brand .b-name { font-family: var(--font-serif); font-size: 20px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; }
+    #fi-brand .b-sub  { font-size: 9.5px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.5; margin-top: 3px; }
+    #btn-close {
+      width: 38px; height: 38px; border: 1px solid var(--border-strong); background: transparent; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--dark);
+      transition: background 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease); flex-shrink: 0;
+    }
+    @media (hover: hover) { #btn-close:hover { background: var(--dark); color: var(--bg); border-color: var(--dark); } }
+
+    /* ── MAIN ── */
+    #fi-main { flex: 1; min-height: 0; display: flex; }
+
+    /* ── STAGE (torre) ── */
+    #fi-stage {
+      flex: 1; min-width: 0; position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      background:
+        radial-gradient(120% 90% at 30% 8%, #F3F0EB 0%, #E6E2DC 45%, #D8D1C6 100%);
+    }
+    /* névoa/horizonte sutil */
+    #fi-stage::after {
+      content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 42%;
+      background: linear-gradient(to top, rgba(68,39,2,0.10), transparent);
+      pointer-events: none;
+    }
+
+    /* torre: proporção da fachada completa (1038 x 1080) */
+    #fi-tower {
+      position: relative;
+      height: 92%;
+      aspect-ratio: 1038 / 1080;
+      max-width: 92%;
+      opacity: 0;
+      transform: translateY(18px) scale(0.99);
+      animation: towerIn 0.9s var(--ease) 0.1s forwards;
+      z-index: 1;
+    }
+    @keyframes towerIn { to { opacity: 1; transform: none; } }
+
+    /* placeholder: a fachada completa (render bonito) — visível em repouso */
+    .fi-placeholder {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: contain; object-position: center;
+      opacity: 1; transition: opacity 0.45s var(--ease);
+      pointer-events: none; user-select: none; -webkit-user-drag: none;
+      filter: drop-shadow(0 26px 42px rgba(43,25,4,0.26));
+      z-index: 0;
+    }
+
+    /* camadas "-selected": a fachada com só uma faixa em foco (resto fantasma).
+       Cross-fade por opacity sobre o placeholder. */
+    .fi-sel {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: contain; object-position: center;
+      opacity: 0; transition: opacity 0.45s var(--ease);
+      pointer-events: none; user-select: none; -webkit-user-drag: none;
+      filter: drop-shadow(0 26px 42px rgba(43,25,4,0.26));
+      z-index: 1;
+    }
+
+    /* faixas (partes separadas) — alinhadas sobre a fachada, invisíveis em repouso */
+    .fi-band-img {
+      position: absolute;
+      height: auto;
+      opacity: 0;
+      pointer-events: none; user-select: none; -webkit-user-drag: none;
+      transition: opacity 0.45s var(--ease), transform 0.6s var(--spring), filter 0.4s var(--ease);
+      filter: drop-shadow(0 22px 36px rgba(43,25,4,0.30));
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+    }
+    .fi-band-img[data-band="alta"]  { left: 7.71%; top: 1.94%;  width: 39.98%; z-index: 4; }
+    .fi-band-img[data-band="media"] { left: 6.26%; top: 33.33%; width: 39.98%; z-index: 3; }
+    .fi-band-img[data-band="baixa"] { left: 0%;    top: 56.11%; width: 50.00%; z-index: 2; }
+
+    /* faixa em destaque: acima de tudo, sombra mais forte */
+    .fi-band-img.hero { z-index: 6; filter: drop-shadow(0 44px 66px rgba(43,25,4,0.48)); }
+
+    /* zonas clicáveis sobre a torre (metade esquerda) */
+    #fi-zones { position: absolute; inset: 0; z-index: 3; }
+    .fi-zone {
+      position: absolute; left: 0; width: 94%; cursor: pointer;
+      border-radius: 10px;
+      transition: background 0.3s var(--ease);
+    }
+    .fi-zone::before {
+      content: attr(data-range);
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%) scale(0.9);
+      white-space: nowrap; padding: 6px 14px; border-radius: 40px;
+      background: var(--dark); color: var(--bg);
+      font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+      opacity: 0; transition: opacity 0.25s var(--ease), transform 0.25s var(--spring);
+      box-shadow: 0 8px 22px rgba(43,25,4,0.35); pointer-events: none;
+    }
+    @media (hover: hover) {
+      .fi-zone:hover { background: radial-gradient(60% 55% at 45% 50%, var(--accent-soft), transparent 75%); }
+      .fi-zone:hover::before { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+    }
+    /* touch: rótulos das 3 faixas sempre visíveis (descoberta), sutis */
+    @media (hover: none) {
+      .fi-zone::before { opacity: 0.8; transform: translate(-50%,-50%) scale(0.92); }
+      .fi-zone.is-active::before { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+    }
+
+    /* escala vertical de andares — à direita da silhueta do prédio */
+    #fi-scale {
+      position: absolute; top: 3%; bottom: 6%; left: 53%;
+      width: 1px; background: linear-gradient(to bottom, transparent, var(--border-strong) 10%, var(--border-strong) 90%, transparent);
+      z-index: 2; pointer-events: none;
+      opacity: 0; animation: fadeIn 0.8s ease 0.7s forwards;
+    }
+    .fi-tick { position: absolute; left: 0; transform: translateY(-50%); display: flex; align-items: center; gap: 8px; }
+    .fi-tick i { width: 9px; height: 1px; background: var(--border-strong); display: block; }
+    .fi-tick span { font-size: 10px; letter-spacing: 0.08em; color: var(--text-soft); font-weight: 500; white-space: nowrap; }
+
+    /* dica flutuante */
+    #fi-hint {
+      position: absolute; bottom: max(22px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%);
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 9px 20px; border-radius: 40px;
+      background: var(--dark); color: var(--bg);
+      font-size: 11px; font-weight: 500; letter-spacing: 0.05em;
+      box-shadow: 0 10px 26px rgba(43,25,4,0.30); z-index: 4;
+      opacity: 0; animation: hintIn 0.6s var(--spring) 1s forwards;
+      transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+    }
+    #fi-hint.hide { opacity: 0 !important; transform: translateX(-50%) translateY(10px); pointer-events: none; }
+    #fi-hint .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--bg); animation: pulse 1.6s ease-in-out infinite; }
+    @keyframes hintIn { from { opacity: 0; transform: translateX(-50%) translateY(12px); } to { opacity: 1; transform: translateX(-50%); } }
+    @keyframes pulse { 0%,100% { opacity: 0.35; } 50% { opacity: 1; } }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    /* ── PANEL ── */
+    #fi-panel {
+      width: 380px; flex-shrink: 0; border-left: 1px solid var(--border);
+      background: linear-gradient(180deg, #EDEAE4, #E1DBD1);
+      display: flex; flex-direction: column; padding: 22px 22px 0; overflow-y: auto;
+    }
+    #fi-panel::-webkit-scrollbar { width: 5px; }
+    #fi-panel::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+
+    .fi-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-soft); }
+    .fi-h1 { font-family: var(--font-serif); font-size: 23px; font-weight: 400; line-height: 1.1; margin-top: 4px; }
+    .fi-lead { font-size: 11.5px; line-height: 1.5; color: var(--text-soft); margin-top: 8px; }
+
+    /* seletor de faixas */
+    #fi-bands { margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
+    .fi-band {
+      position: relative; text-align: left; cursor: pointer;
+      border: 1px solid var(--border-strong); background: rgba(255,255,255,0.35);
+      border-radius: 14px; padding: 11px 14px; color: var(--dark);
+      transition: border-color 0.25s var(--ease), background 0.25s var(--ease), transform 0.2s var(--ease), box-shadow 0.25s var(--ease);
+      overflow: hidden;
+    }
+    @media (hover: hover) { .fi-band:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 12px 26px rgba(43,25,4,0.14); } }
+    .fi-band .r { font-size: 15px; font-weight: 600; letter-spacing: 0.01em; display: flex; align-items: center; gap: 10px; }
+    .fi-band .r .n { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--border-strong); font-size: 11px; font-weight: 600; flex-shrink: 0; transition: background 0.25s, color 0.25s, border-color 0.25s; }
+    .fi-band .h { font-size: 11px; color: var(--text-soft); margin-top: 4px; letter-spacing: 0.02em; }
+    .fi-band .arrow { position: absolute; right: 14px; top: 50%; transform: translateY(-50%) translateX(-4px); opacity: 0; transition: opacity 0.25s, transform 0.25s; }
+    @media (hover: hover) { .fi-band:hover .arrow { opacity: 0.6; transform: translateY(-50%); } }
+    .fi-band.active {
+      background: var(--dark); color: var(--bg); border-color: var(--dark);
+      box-shadow: 0 14px 30px rgba(43,25,4,0.30);
+    }
+    .fi-band.active .h { color: rgba(230,226,220,0.7); }
+    .fi-band.active .r .n { background: var(--bg); color: var(--dark); border-color: var(--bg); }
+    .fi-band.active .arrow { opacity: 0; }
+    #fi-bands.has-active .fi-band:not(.active) { opacity: 0.5; }
+    @media (hover: hover) { #fi-bands.has-active .fi-band:not(.active):hover { opacity: 1; } }
+
+    /* opções de vista */
+    #fi-views { margin-top: 16px; border-top: 1px solid var(--border); padding-top: 16px; display: none; }
+    #fi-views.show { display: block; animation: viewsIn 0.45s var(--ease); }
+    @keyframes viewsIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    #fi-views .vh { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+    #fi-views .vh .t { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+    #fi-views .vh .b { font-size: 11px; color: var(--text-soft); }
+    #fi-views .vcap { font-size: 11.5px; color: var(--text-soft); line-height: 1.5; margin-top: 6px; }
+
+    #fi-chips { margin-top: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .fi-chip {
+      position: relative; aspect-ratio: 1; border-radius: 50%; cursor: pointer;
+      border: 1px solid var(--border-strong); background: rgba(255,255,255,0.4); color: var(--dark);
+      display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.1;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.01em;
+      transition: background 0.22s var(--ease), color 0.22s var(--ease), border-color 0.22s var(--ease), transform 0.2s var(--spring), box-shadow 0.22s;
+      opacity: 0; animation: chipIn 0.4s var(--spring) forwards;
+    }
+    @keyframes chipIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+    /* andar com vista disponível = preenchido (claramente clicável) */
+    .fi-chip.enabled { background: var(--accent); color: var(--bg); border-color: var(--accent); box-shadow: 0 8px 20px rgba(43,25,4,0.22); }
+    @media (hover: hover) { .fi-chip.enabled:hover { transform: translateY(-3px) scale(1.06); box-shadow: 0 14px 28px rgba(43,25,4,0.34); } }
+    .fi-chip.enabled::after {
+      content: ''; position: absolute; inset: -5px; border-radius: 50%;
+      border: 1px solid var(--accent); opacity: 0; transition: opacity 0.25s;
+    }
+    @media (hover: hover) { .fi-chip.enabled:hover::after { opacity: 0.4; } }
+    .fi-chip .go { position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%); font-size: 7.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-soft); font-weight: 600; white-space: nowrap; }
+    .fi-chip.soon { opacity: 0.42; cursor: not-allowed; }
+    .fi-chip .soon-tag { position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%); font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-soft); font-weight: 500; }
+    .fi-chip.cob { font-size: 10px; letter-spacing: 0; }
+    /* espaço para os rótulos abaixo dos chips */
+    #fi-chips { row-gap: 20px; }
+
+    #fi-back {
+      margin-top: 14px; align-self: flex-start; display: inline-flex; align-items: center; gap: 7px;
+      background: none; border: none; cursor: pointer; color: var(--text-soft);
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500; letter-spacing: 0.06em;
+      padding: 6px 0; transition: color 0.2s; display: none;
+    }
+    #fi-back.show { display: inline-flex; }
+    @media (hover: hover) { #fi-back:hover { color: var(--dark); } }
+
+    /* rodapé fixo do painel: mantém "Conheça a localização" sempre visível */
+    #fi-panel-foot {
+      position: sticky; bottom: 0; margin-top: auto;
+      display: flex; flex-direction: column;
+      padding: 12px 0 16px; background: linear-gradient(180deg, rgba(225,219,209,0) 0%, #E4DED4 22%);
+      border-top: 1px solid var(--border);
+    }
+    .fi-foot { padding-top: 10px; font-size: 10px; letter-spacing: 0.05em; color: var(--text-soft); opacity: 0.7; }
+
+    /* ══ POPUP DE ANDARES (mobile) — bottom-sheet ══ */
+    #fi-modal { display: none; position: fixed; inset: 0; z-index: 50; }
+    #fi-modal.open { display: block; }
+    #fi-modal-backdrop {
+      position: absolute; inset: 0; background: rgba(30,17,3,0.45);
+      opacity: 0; transition: opacity 0.3s var(--ease); -webkit-backdrop-filter: blur(1px); backdrop-filter: blur(1px);
+    }
+    #fi-modal.open #fi-modal-backdrop { opacity: 1; }
+    #fi-modal-card {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(180deg, #EDEAE4, #E1DBD1);
+      border-top-left-radius: 22px; border-top-right-radius: 22px;
+      box-shadow: 0 -18px 44px rgba(43,25,4,0.30);
+      padding: 20px 20px calc(18px + env(safe-area-inset-bottom));
+      padding-left: max(20px, env(safe-area-inset-left));
+      padding-right: max(20px, env(safe-area-inset-right));
+      max-height: 74vh; overflow-y: auto;
+      transform: translateY(100%); transition: transform 0.42s var(--spring);
+    }
+    #fi-modal.open #fi-modal-card { transform: none; }
+    #fi-modal-card::before {
+      content: ''; display: block; width: 40px; height: 4px; border-radius: 3px;
+      background: var(--border-strong); margin: 0 auto 14px;
+    }
+    #fi-modal-close {
+      position: absolute; top: 12px; right: 12px; width: 40px; height: 40px;
+      border: 1px solid var(--border-strong); background: rgba(255,255,255,0.5); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; color: var(--dark); cursor: pointer;
+    }
+    #fi-modal .m-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-soft); }
+    #fi-modal-title { font-family: var(--font-serif); font-size: 26px; font-weight: 400; line-height: 1.1; margin-top: 4px; }
+    #fi-modal-sub { font-size: 12.5px; line-height: 1.5; color: var(--text-soft); margin-top: 6px; }
+    #fi-modal-chips { margin-top: 16px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .fi-mchip {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+      min-height: 62px; padding: 10px 8px; border-radius: 14px; cursor: pointer;
+      border: 1px solid var(--accent); background: var(--accent); color: var(--bg);
+      box-shadow: 0 8px 20px rgba(43,25,4,0.20);
+      opacity: 0; animation: chipIn 0.4s var(--spring) forwards;
+      transition: transform 0.15s var(--ease);
+    }
+    .fi-mchip:active { transform: scale(0.96); }
+    .fi-mchip .mlabel { font-size: 16px; font-weight: 600; letter-spacing: 0.01em; }
+    .fi-mchip .mcap { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.85; }
+    .fi-mchip.soon {
+      background: rgba(255,255,255,0.4); color: var(--text-soft); border-color: var(--border-strong);
+      box-shadow: none; cursor: not-allowed;
+    }
+
+    /* botão "Conheça a localização" */
+    .fi-loc-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      border: 1px solid var(--accent); background: transparent; color: var(--dark); cursor: pointer;
+      font-family: var(--font-sans); font-size: 12px; font-weight: 600; letter-spacing: 0.04em;
+      padding: 12px 18px; border-radius: 40px; transition: background 0.22s var(--ease), color 0.22s var(--ease);
+    }
+    @media (hover: hover) { .fi-loc-btn:hover { background: var(--accent); color: var(--bg); } }
+    #fi-loc-desktop { width: 100%; }
+    #fi-loc-mobile {
+      display: none; position: absolute; z-index: 4;
+      left: 50%; transform: translateX(-50%);
+      bottom: calc(16px + env(safe-area-inset-bottom));
+      background: var(--dark); color: var(--bg); border-color: var(--dark);
+      box-shadow: 0 10px 26px rgba(43,25,4,0.32);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 820px) {
+      #fi-panel { display: none; }              /* fachada em tela cheia */
+      #fi-main { flex-direction: column; }
+      #fi-stage { flex: 1; height: auto; }
+      #fi-tower { height: 92%; }
+      #fi-scale { display: none; }              /* régua atrapalha na tela cheia */
+      #btn-close { width: 44px; height: 44px; } /* alvo de toque confortável */
+      #fi-loc-mobile { display: inline-flex; }  /* botão de localização fixo */
+      #fi-hint { bottom: calc(74px + env(safe-area-inset-bottom)); } /* acima do botão */
+    }
+    @media (max-width: 480px) {
+      #fi-header { padding: 10px 14px; padding-top: max(10px, env(safe-area-inset-top)); }
+      #fi-brand .b-name { font-size: 17px; }
+      #fi-modal-chips { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="fi-root">
+  <header id="fi-header">
+    <div id="fi-brand">
+      <span class="b-name">Nuar</span>
+      <span class="b-sub">Fachada Interativa</span>
+    </div>
+    <button id="btn-close" title="Fechar" aria-label="Fechar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </header>
+
+  <div id="fi-main">
+    <!-- STAGE -->
+    <div id="fi-stage">
+      <div id="fi-tower">
+        <img class="fi-placeholder" id="fi-ph" alt="Fachada Nuar" draggable="false">
+        <!-- 3 faixas (partes separadas) injetadas via JS por cima -->
+        <div id="fi-scale"></div>
+        <div id="fi-zones"></div>
+      </div>
+      <div id="fi-hint"><span class="dot"></span> Toque em uma faixa de andares</div>
+      <button id="fi-loc-mobile" class="fi-loc-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="15" height="15"><path d="M12 21s-6-5.2-6-10a6 6 0 1112 0c0 4.8-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>
+        Conheça a localização
+      </button>
+    </div>
+
+    <!-- PANEL -->
+    <aside id="fi-panel">
+      <span class="fi-eyebrow">Nuar Residence</span>
+      <h1 class="fi-h1">Explore a torre por faixa de andares</h1>
+      <p class="fi-lead">Escolha uma faixa para destacá-la na fachada e abrir a vista 360° de um andar.</p>
+
+      <div id="fi-bands"></div>
+
+      <section id="fi-views">
+        <div class="vh">
+          <span class="t" id="fi-views-title">Simule as vistas</span>
+          <span class="b" id="fi-views-band"></span>
+        </div>
+        <p class="vcap">Toque em um andar para abrir a vista 360° correspondente.</p>
+        <div id="fi-chips"></div>
+      </section>
+
+      <button id="fi-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="14" height="14"><path d="M15 18l-6-6 6-6"/></svg>
+        Ver a torre inteira
+      </button>
+
+      <div id="fi-panel-foot">
+        <button id="fi-loc-desktop" class="fi-loc-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="15" height="15"><path d="M12 21s-6-5.2-6-10a6 6 0 1112 0c0 4.8-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>
+          Conheça a localização
+        </button>
+        <p class="fi-foot">Imagens meramente ilustrativas.</p>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- POPUP DE ANDARES (mobile) -->
+<div id="fi-modal" aria-hidden="true">
+  <div id="fi-modal-backdrop"></div>
+  <div id="fi-modal-card" role="dialog" aria-modal="true" aria-labelledby="fi-modal-title">
+    <button id="fi-modal-close" aria-label="Fechar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="16" height="16"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <span class="m-eyebrow">Nuar Residence</span>
+    <h2 id="fi-modal-title">Faixa</h2>
+    <p id="fi-modal-sub">Escolha o andar para abrir a vista 360°.</p>
+    <div id="fi-modal-chips"></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════════
+//  CONFIG — faixas de andares e índice do panorama (3DVista)
+//  "idx" é passado para setMediaByIndex(idx) do 3DVista (troca o
+//  panorama sem recarregar o tour). Use o mesmo número que você usaria
+//  em setMediaByIndex — se a vista abrir 1 posição deslocada, ajuste aqui.
+//  Andares sem idx aparecem como "Em breve".
+// ══════════════════════════════════════════════════════════════════
+var ASSETS = 'assets/fachada-interativa-assets/';
+var PARTS  = ASSETS + 'partes-separadas/';
+var FI = {
+  full: ASSETS + 'fachada-integral.png',   // fachada completa (base em repouso)
+  bands: [
+    { id:'alta',  n:'C', range:'11º a Cobertura', hint:'Coberturas duplex e vistas mais altas',
+      seg: PARTS + '11-cob.png', sel: ASSETS + '11-cob-selected.png', zone:[2, 33],
+      floors:[
+        { label:'Cobertura', idx:6, cob:true }, { label:'14º', idx:9 }, { label:'13º', idx:12 },
+        { label:'12º', idx:15 }, { label:'11º', idx:18 }
+      ]
+    },
+    { id:'media', n:'B', range:'6º ao 10º', hint:'Andares intermediários',
+      seg: PARTS + '6-10.png', sel: ASSETS + '6-10-selected.png', zone:[33, 56],
+      floors:[
+        { label:'10º', idx:21 }, { label:'9º', idx:24 }, { label:'8º', idx:27 },
+        { label:'7º', idx:30 }, { label:'6º', idx:33 }
+      ]
+    },
+    { id:'baixa', n:'A', range:'Lazer ao 5º', hint:'Lazer e primeiros andares',
+      seg: PARTS + '1-5.png', sel: ASSETS + '1-5-selected.png', zone:[56, 95],
+      floors:[
+        { label:'5º', idx:36 }, { label:'4º', idx:39 }, { label:'3º', idx:42 },
+        { label:'2º', idx:45 }, { label:'1º', idx:48 }, { label:'Lazer', idx:51 }
+      ]
+    }
+  ],
+  // marcadores da régua vertical (top em % da altura da torre)
+  ticks: [ {label:'Cobertura', top:3}, {label:'11º', top:31}, {label:'6º', top:55}, {label:'1º', top:86} ]
+};
+
+var $ = function (s, r) { return (r||document).querySelector(s); };
+var elTower = $('#fi-tower'), elStage = $('#fi-stage'), elZones = $('#fi-zones'),
+    elScale = $('#fi-scale'), elBands = $('#fi-bands'), elViews = $('#fi-views'),
+    elChips = $('#fi-chips'), elHint = $('#fi-hint'), elBack = $('#fi-back'),
+    elViewsBand = $('#fi-views-band');
+
+// popup de andares (mobile)
+var elModal = $('#fi-modal'), elModalCard = $('#fi-modal-card'),
+    elModalTitle = $('#fi-modal-title'), elModalChips = $('#fi-modal-chips');
+
+var elPh = $('#fi-ph');                     // fachada integral (base em repouso)
+var bandImg = {};                          // id -> <img> (recorte da peça)
+var selLayer = {};                         // id -> <img> (camada "-selected")
+var zoneEl = {};                           // id -> <div> (zona tocável sobre a torre)
+var locked = null;                         // faixa travada por clique (ou null)
+var hovered = null;                        // faixa sob o cursor (ou null)
+var pieceOut = null;                       // faixa cuja peça está deslizada p/ fora
+var selGen = 0;                            // geração (cancela timeouts antigos do slide)
+
+// mobile = layout em coluna (avaliado sob demanda p/ responder à rotação)
+function isMobile() { return window.matchMedia('(max-width: 820px)').matches; }
+
+// base = fachada integral (render completo)
+elPh.src = FI.full;
+
+// injeta as camadas "-selected" (fachada com uma faixa em foco) — cross-fade
+FI.bands.forEach(function (b) {
+  var img = document.createElement('img');
+  img.className = 'fi-sel';
+  img.dataset.band = b.id;
+  img.alt = 'Fachada com ' + b.range + ' em destaque';
+  img.draggable = false;
+  img.src = b.sel;
+  elTower.insertBefore(img, elScale);
+  selLayer[b.id] = img;
+});
+
+// injeta as 3 faixas (partes separadas) por cima — só entram no clique (slide)
+FI.bands.forEach(function (b) {
+  var img = document.createElement('img');
+  img.className = 'fi-band-img';
+  img.dataset.band = b.id;
+  img.alt = 'Faixa ' + b.range;
+  img.draggable = false;
+  img.src = b.seg;
+  elTower.insertBefore(img, elScale);
+  bandImg[b.id] = img;
+});
+
+// base exibida = hovered || locked || integral. Uma regra só.
+function render() {
+  var show = hovered || locked;            // id ou null
+  elPh.style.opacity = show ? '0' : '1';
+  FI.bands.forEach(function (b) {
+    selLayer[b.id].style.opacity = (b.id === show) ? '1' : '0';
+    if (zoneEl[b.id]) zoneEl[b.id].classList.toggle('is-active', b.id === locked);
+  });
+}
+
+// régua
+FI.ticks.forEach(function (t) {
+  var d = document.createElement('div');
+  d.className = 'fi-tick';
+  d.style.top = t.top + '%';
+  d.innerHTML = '<i></i><span>' + t.label + '</span>';
+  elScale.appendChild(d);
+});
+
+// zonas clicáveis sobre a torre
+FI.bands.forEach(function (b) {
+  var z = document.createElement('div');
+  z.className = 'fi-zone';
+  z.dataset.range = b.range;
+  z.style.top = b.zone[0] + '%';
+  z.style.height = (b.zone[1] - b.zone[0]) + '%';
+  z.addEventListener('click', function () { selectBand(b.id); });
+  z.addEventListener('mouseenter', function () { hovered = b.id; render(); });
+  z.addEventListener('mouseleave', function () { hovered = null; render(); });
+  elZones.appendChild(z);
+  zoneEl[b.id] = z;
+});
+
+// botões de faixa (painel)
+FI.bands.forEach(function (b) {
+  var btn = document.createElement('button');
+  btn.className = 'fi-band';
+  btn.dataset.id = b.id;
+  btn.innerHTML =
+    '<div class="r"><span class="n">' + b.n + '</span>' + b.range + '</div>' +
+    '<div class="h">' + b.hint + '</div>' +
+    '<span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="16" height="16"><path d="M9 18l6-6-6-6"/></svg></span>';
+  btn.addEventListener('click', function () { selectBand(b.id); });
+  btn.addEventListener('mouseenter', function () { hovered = b.id; render(); });
+  btn.addEventListener('mouseleave', function () { hovered = null; render(); });
+  elBands.appendChild(btn);
+});
+
+// ── slide da peça (flourish de "saída do corte") ──
+// desliza o recorte individual da faixa para fora, em duas fases.
+function slidePiece(id) {
+  var gen = ++selGen;                       // cancela fases pendentes de slides anteriores
+  var el = bandImg[id];
+  el.classList.add('hero');
+  el.style.opacity = '1';
+
+  var stage = elStage.getBoundingClientRect();
+  var tower = elTower.getBoundingClientRect();
+  // centro base da faixa (via layout — imune ao transform atual)
+  var cx = tower.left + el.offsetLeft + el.offsetWidth / 2;
+  var cy = tower.top + el.offsetTop + el.offsetHeight / 2;
+  var dx = (stage.left + stage.width * 0.66) - cx;
+  var dy = (stage.top + stage.height * 0.50) - cy;
+  var dirX = dx >= 0 ? 1 : -1;
+  // fase 1 — leve estalo pra fora
+  el.style.transition = 'opacity 0.3s var(--ease), transform 0.32s cubic-bezier(0.34,1.6,0.6,1)';
+  el.style.transform = 'translate(' + (dirX * 30) + 'px, -22px) scale(1.05)';
+  // fase 2 — SLIDE até a direita e assenta
+  setTimeout(function () {
+    if (gen !== selGen) return;             // outra faixa foi escolhida nesse meio tempo
+    el.style.transition = 'transform 0.74s cubic-bezier(0.16,1,0.3,1)';
+    el.style.transform = 'translate(' + dx + 'px, ' + dy + 'px) scale(1.12)';
+  }, 280);
+}
+
+// recolhe a peça de volta para dentro da fachada
+function retractPiece(id) {
+  var el = bandImg[id];
+  el.classList.remove('hero');
+  el.style.transition = 'transform 0.6s var(--spring), opacity 0.45s var(--ease)';
+  el.style.transform = '';
+  el.style.opacity = '0';
+  el.style.zIndex = '';
+}
+
+// atualiza o painel (faixa ativa, dica, vistas/chips 360°)
+function updatePanel(b) {
+  elBands.classList.add('has-active');
+  Array.prototype.forEach.call(elBands.children, function (btn) {
+    btn.classList.toggle('active', btn.dataset.id === b.id);
+  });
+  elHint.classList.add('hide');
+  elBack.classList.add('show');
+
+  elViewsBand.textContent = b.range;
+  elChips.innerHTML = '';
+  b.floors.forEach(function (f, i) {
+    var c = document.createElement('button');
+    c.className = 'fi-chip ' + (f.idx != null ? 'enabled' : 'soon') + (f.cob ? ' cob' : '');
+    c.style.animationDelay = (0.04 * i) + 's';
+    c.innerHTML = f.label + (f.idx == null ? '<span class="soon-tag">em breve</span>' : '<span class="go">ver vista</span>');
+    if (f.idx != null) {
+      c.title = 'Abrir vista 360° — ' + f.label;
+      c.addEventListener('click', function () { goToPanorama(f.idx); });
+    } else {
+      c.title = f.label + ' — vista em breve';
+    }
+    elChips.appendChild(c);
+  });
+  elViews.classList.remove('show'); void elViews.offsetWidth; elViews.classList.add('show');
+}
+
+// ── popup de andares (mobile) ──
+function renderModalFloors(b) {
+  elModalTitle.textContent = b.range;
+  elModalChips.innerHTML = '';
+  b.floors.forEach(function (f, i) {
+    var c = document.createElement('button');
+    c.className = 'fi-mchip' + (f.idx == null ? ' soon' : '');
+    c.style.animationDelay = (0.03 * i) + 's';
+    c.innerHTML = '<span class="mlabel">' + f.label + '</span>' +
+                  '<span class="mcap">' + (f.idx == null ? 'em breve' : 'ver vista 360°') + '</span>';
+    if (f.idx != null) {
+      c.addEventListener('click', function () { goToPanorama(f.idx); });
+    } else {
+      c.disabled = true;
+    }
+    elModalChips.appendChild(c);
+  });
+}
+
+function openModal(b) {
+  renderModalFloors(b);
+  elModal.classList.add('open');
+  elModal.setAttribute('aria-hidden', 'false');
+}
+
+function closeModal() {
+  elModal.classList.remove('open');
+  elModal.setAttribute('aria-hidden', 'true');
+  reset();                                   // volta a torre à integral
+}
+
+// clique/toque numa faixa: trava o "-selected" e destaca a peça.
+// Desktop → painel lateral · Mobile → popup de andares.
+function selectBand(id) {
+  var b = FI.bands.find(function (x) { return x.id === id; });
+  if (!b) return;
+
+  var isNew = (locked !== id);
+  if (isNew) {
+    var prevOut = pieceOut;
+    locked = id;
+    hovered = null;
+    render();                                 // base trava no X-selected
+    if (prevOut && prevOut !== id) retractPiece(prevOut);   // recolhe a peça anterior
+    slidePiece(id);                                         // destaca a nova peça (slide de duas fases)
+    pieceOut = id;
+    if (!isMobile()) updatePanel(b);
+  } else {
+    hovered = null; render();
+  }
+
+  // mobile: espera a peça deslizar antes de subir o popup (senão ele cobre a animação)
+  if (isMobile()) {
+    if (isNew) setTimeout(function () { if (locked === id) openModal(b); }, 620);
+    else openModal(b);
+  }
+}
+
+// "Ver a torre inteira": volta ao estado normal (fachada integral)
+function reset() {
+  var prevOut = pieceOut;
+  locked = null; hovered = null; pieceOut = null;
+  render();                                 // base volta à integral
+  if (prevOut) retractPiece(prevOut);
+
+  elBands.classList.remove('has-active');
+  Array.prototype.forEach.call(elBands.children, function (btn) { btn.classList.remove('active'); });
+  elViews.classList.remove('show');
+  elBack.classList.remove('show');
+  elHint.classList.remove('hide');
+}
+
+// ── ir para o panorama (injeta ?media-index=X no 3DVista e fecha) ──
+function goToPanorama(idx) {
+  if (idx == null) return;
+  if (window.parent !== window) {
+    window.parent.postMessage({ action: 'goToPanorama', mediaIndex: idx }, '*');
+  } else {
+    // modo standalone (teste fora do 3DVista)
+    try {
+      var u = new URL(window.location.href);
+      u.searchParams.set('media-index', idx);
+      window.location.href = u.toString();
+    } catch (e) { window.location.search = '?media-index=' + idx; }
+  }
+}
+
+// ── Conheça a localização → navega o tour para a mídia de índice 3 ──
+function goToLocation() { goToPanorama(3); }
+
+// ── fechar ──
+function closeScreen() {
+  if (window.parent !== window) window.parent.postMessage({ action: 'closeGallery' }, '*');
+  else if (window.history.length > 1) history.back();
+  else window.close();
+}
+
+$('#btn-close').addEventListener('click', closeScreen);
+elBack.addEventListener('click', reset);
+$('#fi-loc-desktop').addEventListener('click', goToLocation);
+$('#fi-loc-mobile').addEventListener('click', goToLocation);
+$('#fi-modal-close').addEventListener('click', closeModal);
+$('#fi-modal-backdrop').addEventListener('click', closeModal);
+document.addEventListener('keydown', function (e) {
+  if (e.key !== 'Escape') return;
+  if (elModal.classList.contains('open')) closeModal();
+  else if (locked) reset();
+  else closeScreen();
+});
+</script>
+</body>
+</html>
