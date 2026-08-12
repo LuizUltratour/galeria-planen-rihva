@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Fachada Interativa — Nuar Residence</title>
+  <title>Fachada Interativa — GHC Vertus Fascinna</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -11,15 +11,15 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #E6E2DC;            /* areia */
-      --surface: #DCD6CC;
-      --dark: #442702;          /* marrom Tauf */
-      --text-soft: rgba(68,39,2,0.55);
-      --border: rgba(68,39,2,0.14);
-      --border-strong: rgba(68,39,2,0.30);
-      --accent: #442702;
-      --accent-soft: rgba(68,39,2,0.09);
-      --glow: rgba(120,78,26,0.55);
+      --bg: #FBF0E5;            /* areia */
+      --surface: #F1E4D7;
+      --dark: #2E3820;          /* verde-oliva */
+      --text-soft: rgba(46,56,32,0.55);
+      --border: rgba(46,56,32,0.14);
+      --border-strong: rgba(46,56,32,0.30);
+      --accent: #2E3820;
+      --accent-soft: rgba(46,56,32,0.09);
+      --glow: rgba(74,90,51,0.55);
       --white: #FFFFFF;
       --font-serif: 'Cormorant Garamond', Georgia, serif;
       --font-sans: 'Inter', system-ui, sans-serif;
@@ -58,12 +58,12 @@
       flex: 1; min-width: 0; position: relative; overflow: hidden;
       display: flex; align-items: center; justify-content: center;
       background:
-        radial-gradient(120% 90% at 30% 8%, #F3F0EB 0%, #E6E2DC 45%, #D8D1C6 100%);
+        radial-gradient(120% 90% at 30% 8%, #FFFEF4 0%, #FBF0E5 45%, #EDDFCF 100%);
     }
     /* névoa/horizonte sutil */
     #fi-stage::after {
       content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 42%;
-      background: linear-gradient(to top, rgba(68,39,2,0.10), transparent);
+      background: linear-gradient(to top, rgba(46,56,32,0.10), transparent);
       pointer-events: none;
     }
 
@@ -267,7 +267,7 @@
     #fi-modal { display: none; position: fixed; inset: 0; z-index: 50; }
     #fi-modal.open { display: block; }
     #fi-modal-backdrop {
-      position: absolute; inset: 0; background: rgba(30,17,3,0.45);
+      position: absolute; inset: 0; background: rgba(28,34,19,0.45);
       opacity: 0; transition: opacity 0.3s var(--ease); -webkit-backdrop-filter: blur(1px); backdrop-filter: blur(1px);
     }
     #fi-modal.open #fi-modal-backdrop { opacity: 1; }
@@ -356,7 +356,7 @@
 <div id="fi-root">
   <header id="fi-header">
     <div id="fi-brand">
-      <span class="b-name">Nuar</span>
+      <span class="b-name">Vertus Fascinna</span>
       <span class="b-sub">Fachada Interativa</span>
     </div>
     <button id="btn-close" title="Fechar" aria-label="Fechar">
@@ -368,7 +368,7 @@
     <!-- STAGE -->
     <div id="fi-stage">
       <div id="fi-tower">
-        <img class="fi-placeholder" id="fi-ph" alt="Fachada Nuar" draggable="false">
+        <img class="fi-placeholder" id="fi-ph" alt="Fachada Vertus Fascinna" draggable="false">
         <!-- 3 faixas (partes separadas) injetadas via JS por cima -->
         <div id="fi-scale"></div>
         <div id="fi-zones"></div>
@@ -382,7 +382,7 @@
 
     <!-- PANEL -->
     <aside id="fi-panel">
-      <span class="fi-eyebrow">Nuar Residence</span>
+      <span class="fi-eyebrow">GHC Vertus Fascinna</span>
       <h1 class="fi-h1">Explore a torre por faixa de andares</h1>
       <p class="fi-lead">Escolha uma faixa para destacá-la na fachada e abrir a vista 360° de um andar.</p>
 
@@ -420,7 +420,7 @@
     <button id="fi-modal-close" aria-label="Fechar">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="16" height="16"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
-    <span class="m-eyebrow">Nuar Residence</span>
+    <span class="m-eyebrow">GHC Vertus Fascinna</span>
     <h2 id="fi-modal-title">Faixa</h2>
     <p id="fi-modal-sub">Escolha o andar para abrir a vista 360°.</p>
     <div id="fi-modal-chips"></div>

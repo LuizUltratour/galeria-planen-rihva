@@ -1,7 +1,7 @@
 (function (w, d) {
   'use strict';
 
-  var BASE = 'https://skylineip.s3.sa-east-1.amazonaws.com/Tour+Virtual/tauf/ferramentas/galeria/';
+  var BASE = 'https://skylineip.s3.sa-east-1.amazonaws.com/Tour+Virtual/ghc/vertus+fascinna/ferramentas/galeria/';
   var GALLERY_URL       = BASE + 'index.html';
   var VIDEO_GALLERY_URL = BASE + 'video-gallery.html';
   var FACHADA_URL       = BASE + 'fachada-interativa.html';
@@ -93,7 +93,7 @@
   }
 
   function _open(mode) {
-    _mount(GALLERY_URL + '?mode=' + encodeURIComponent(mode || 'imagens') + '&v=' + Date.now(), '#E6E2DC');
+    _mount(GALLERY_URL + '?mode=' + encodeURIComponent(mode || 'imagens') + '&v=' + Date.now(), '#FBF0E5');
   }
 
   function _close() {
@@ -123,7 +123,7 @@
 
   // AbrirGaleriaVideos(1) → abre o vídeo teaser · AbrirGaleriaVideos(0) → fecha
   w.AbrirGaleriaVideos = function (show) {
-    if (show === 1) _mount(VIDEO_GALLERY_URL + '?v=' + Date.now(), '#1e1103', 'fullscreen; autoplay');
+    if (show === 1) _mount(VIDEO_GALLERY_URL + '?v=' + Date.now(), '#1c2213', 'fullscreen; autoplay');
     else _close();
   };
 
@@ -147,7 +147,7 @@
     if (typeof arg === 'object') fdvPlayer = arg;   // captura o player (this)
     if (hide !== undefined) hideId = hide || null;
     if (show !== undefined) showId = show || null;
-    _mount(FACHADA_URL + '?v=' + Date.now(), '#E6E2DC');
+    _mount(FACHADA_URL + '?v=' + Date.now(), '#FBF0E5');
   };
 
 }(window, document));

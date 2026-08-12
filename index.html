@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Galeria — Nuar Residence</title>
+  <title>Galeria — GHC Vertus Fascinna</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -11,18 +11,18 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      /* Nuar Residence · Tauf — tema areia/marrom.
-         --bg = areia (E6E2DC) · --dark = tinta marrom (442702) · --accent = marrom */
-      --bg: #E6E2DC;            /* areia — fundo principal */
-      --surface: #DCD6CC;       /* superfície de card (skeleton) */
-      --surface-2: #D0C8BB;     /* superfície elevada / hover */
-      --dark: #442702;          /* foreground / texto principal (marrom Tauf) */
-      --text-soft: rgba(68,39,2,0.55);
-      --border: rgba(68,39,2,0.14);
-      --border-strong: rgba(68,39,2,0.30);
-      --accent: #442702;        /* marrom — destaque / estado ativo */
-      --accent-soft: rgba(68,39,2,0.09);
-      --dark-bg: #2b1904;       /* marrom escuro — backdrop do lightbox */
+      /* GHC Vertus Fascinna — tema areia-claro/verde-oliva.
+         --bg = creme (FBF0E5) · --dark = verde-oliva (2E3820) · --accent = verde-oliva */
+      --bg: #FBF0E5;            /* creme — fundo principal */
+      --surface: #F1E4D7;       /* superfície de card (skeleton) */
+      --surface-2: #E7D8C9;     /* superfície elevada / hover */
+      --dark: #2E3820;          /* foreground / texto principal (verde-oliva) */
+      --text-soft: rgba(46,56,32,0.55);
+      --border: rgba(46,56,32,0.14);
+      --border-strong: rgba(46,56,32,0.30);
+      --accent: #2E3820;        /* verde-oliva — destaque / estado ativo */
+      --accent-soft: rgba(46,56,32,0.09);
+      --dark-bg: #1c2213;       /* verde quase preto — backdrop do lightbox */
       --white: #FFFFFF;
       --font-serif: 'Cormorant Garamond', Georgia, serif;
       --font-sans: 'Inter', system-ui, sans-serif;
@@ -103,7 +103,7 @@
       transition: background 0.22s var(--ease), color 0.22s var(--ease), border-color 0.22s var(--ease), transform 0.15s var(--ease);
     }
     .f-btn:hover { border-color: var(--accent); background: var(--accent-soft); }
-    .f-btn.active { background: var(--accent); color: #FFFFFF; border-color: var(--accent); box-shadow: 0 4px 14px rgba(68,39,2,0.28); }
+    .f-btn.active { background: var(--accent); color: #FFFFFF; border-color: var(--accent); box-shadow: 0 4px 14px rgba(46,56,32,0.28); }
     .f-btn:active { transform: scale(0.97); }
 
     /* Sub-filter */
@@ -225,7 +225,7 @@
       position: absolute;
       bottom: 0; left: 0; right: 0;
       padding: 32px 14px 13px;
-      background: linear-gradient(to top, rgba(30,17,3,0.92) 0%, rgba(30,17,3,0.52) 58%, transparent 100%);
+      background: linear-gradient(to top, rgba(28,34,19,0.92) 0%, rgba(28,34,19,0.52) 58%, transparent 100%);
       color: #FFFFFF;
       opacity: 0;
       transition: opacity 0.35s ease;
@@ -262,7 +262,7 @@
       transform: scale(0.75);
       transition: opacity 0.25s var(--ease), transform 0.3s var(--spring);
       color: #FFFFFF;
-      box-shadow: 0 4px 14px rgba(68,39,2,0.40);
+      box-shadow: 0 4px 14px rgba(46,56,32,0.40);
       z-index: 2;
     }
     .g-card.loaded:hover .card-zoom { opacity: 1; transform: scale(1); }
@@ -288,7 +288,7 @@
       display: flex;
       flex-direction: column;
       background: var(--white);
-      color: #442702;                 /* texto marrom sobre card branco de plantas */
+      color: #2E3820;                 /* texto marrom sobre card branco de plantas */
       border: 1px solid rgba(0,0,0,0.10);
     }
     .g-card.cob-card:hover { transform: none; box-shadow: 0 6px 20px rgba(0,0,0,0.28); border-color: rgba(0,0,0,0.10); }
@@ -373,7 +373,11 @@
       border-radius: 40px;
       background: var(--bg);
       flex-shrink: 0;
+      max-width: 100%;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
+    .floor-tabs::-webkit-scrollbar { display: none; }
     .floor-tab {
       padding: 5px 16px;
       border: none;
@@ -474,7 +478,7 @@
       font-size: 10.5px;
       font-weight: 500;
       letter-spacing: 0.06em;
-      color: #442702;
+      color: #2E3820;
       border-radius: 40px;
       transition: background 0.22s var(--ease), color 0.22s var(--ease), border-color 0.22s var(--ease);
     }
@@ -482,7 +486,7 @@
     .cob-hint {
       font-size: 10px;
       letter-spacing: 0.05em;
-      color: rgba(68,39,2,0.5);
+      color: rgba(46,56,32,0.5);
       text-transform: uppercase;
     }
 
@@ -516,7 +520,7 @@
       z-index: 9000;
       display: flex;
       flex-direction: column;
-      background: rgba(30,17,3,0.985);
+      background: rgba(28,34,19,0.985);
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s ease;
@@ -752,7 +756,7 @@
       /* arrows float over image on mobile */
       #lb-prev, #lb-next {
         width: 38px; height: 38px;
-        background: rgba(30,17,3,0.6);
+        background: rgba(28,34,19,0.6);
         border-color: transparent;
       }
       #lb-prev { left: 8px; }
@@ -878,89 +882,115 @@
 // os campos src com os nomes exatos dos arquivos.
 // ================================================================
 const GALLERY_CONFIG = {
-  projectName: 'NUAR RESIDENCE',
-  projectSub:  'Balneário Piçarras · SC',
+  projectName: 'GHC VERTUS FASCINNA',
+  projectSub:  'João Pessoa · PB',
 
   categories: [
     { id: 'fachada', label: 'Fachada' },
     { id: 'aereas',  label: 'Aéreas' },
     {
-      id: 'residencial', label: 'Residências',
+      id: 'lazer', label: 'Lazer',
       subs: [
-        { id: 'res-tipo',   label: 'Tipo' },
-        { id: 'res-duplex', label: 'Duplex' },
+        { id: 'lazer-piscina', label: 'Piscina' },
+        { id: 'lazer-patio',   label: 'Pátio Interno' },
+        { id: 'lazer-praca',   label: 'Praça' },
+        { id: 'lazer-gourmet', label: 'Gourmet' },
+        { id: 'lazer-kids',    label: 'Kids & Playground' },
+        { id: 'lazer-comum',   label: 'Áreas Comuns' },
       ]
     },
-    { id: 'lazer', label: 'Lazer' },
+    {
+      id: 'residencial', label: 'Residências',
+      subs: [
+        { id: 'res-103', label: 'Apartamento 103' },
+        { id: 'res-106', label: 'Apartamento 106 · Garden' },
+      ]
+    },
     {
       id: 'plantas', label: 'Plantas',
       subs: [
-        { id: 'pl-terreo-lazer', label: 'Térreo & Lazer' },
-        { id: 'pl-tipo',         label: 'Tipo' },
-        { id: 'pl-duplex',       label: 'Duplex' },
+        { id: 'pl-implantacoes', label: 'Implantações' },
+        { id: 'pl-unidades',     label: 'Apartamentos' },
       ]
     },
   ],
 
   items: [
 
-    // ═══ FACHADA (torre, embasamento, detalhes) ═══════════════════
-    { id:1,  type:'image', category:'fachada', title:'Fachada',            src:'assets/fachada/fachada-01.jpg',      thumb:'assets/thumbs/fachada/fachada-01.jpg' },
-    { id:2,  type:'image', category:'fachada', title:'Fachada',            src:'assets/fachada/fachada-02.jpg',      thumb:'assets/thumbs/fachada/fachada-02.jpg' },
-    { id:3,  type:'image', category:'fachada', title:'Fachada',            src:'assets/fachada/fachada-03.jpg',      thumb:'assets/thumbs/fachada/fachada-03.jpg' },
-    { id:4,  type:'image', category:'fachada', title:'Embasamento',        src:'assets/fachada/embasamento-01.jpg',  thumb:'assets/thumbs/fachada/embasamento-01.jpg' },
-    { id:5,  type:'image', category:'fachada', title:'Embasamento',        src:'assets/fachada/embasamento-02.jpg',  thumb:'assets/thumbs/fachada/embasamento-02.jpg' },
-    { id:6,  type:'image', category:'fachada', title:'Detalhe de Fachada', src:'assets/fachada/detalhe-01.jpg',      thumb:'assets/thumbs/fachada/detalhe-01.jpg' },
-    { id:7,  type:'image', category:'fachada', title:'Detalhe de Fachada', src:'assets/fachada/detalhe-02.jpg',      thumb:'assets/thumbs/fachada/detalhe-02.jpg' },
-    { id:8,  type:'image', category:'fachada', title:'Detalhe de Fachada', src:'assets/fachada/detalhe-03.jpg',      thumb:'assets/thumbs/fachada/detalhe-03.jpg' },
-    { id:9,  type:'image', category:'fachada', title:'Detalhe de Fachada', src:'assets/fachada/detalhe-04.jpg',      thumb:'assets/thumbs/fachada/detalhe-04.jpg' },
-    { id:10, type:'image', category:'fachada', title:'Detalhe de Fachada', src:'assets/fachada/detalhe-05.jpg',      thumb:'assets/thumbs/fachada/detalhe-05.jpg' },
+    // ═══ FACHADA ═══════════════════════════════════════════════════
+    { id:1, type:'image', category:'fachada', title:'Vista Frontal',            src:'assets/imagens/fachada/fachada-frontal.jpg',        thumb:'assets/thumbs/imagens/fachada/fachada-frontal.jpg' },
+    { id:2, type:'image', category:'fachada', title:'Vista de Esquina',         src:'assets/imagens/fachada/fachada-esquina.jpg',        thumb:'assets/thumbs/imagens/fachada/fachada-esquina.jpg' },
+    { id:3, type:'image', category:'fachada', title:'Entrada Principal',        src:'assets/imagens/fachada/fachada-entrada.jpg',        thumb:'assets/thumbs/imagens/fachada/fachada-entrada.jpg' },
+    { id:4, type:'image', category:'fachada', title:'Vista de Baixo para Cima', src:'assets/imagens/fachada/fachada-vista-inferior.jpg', thumb:'assets/thumbs/imagens/fachada/fachada-vista-inferior.jpg' },
+    { id:5, type:'image', category:'fachada', title:'Vista Lateral',           src:'assets/imagens/fachada/fachada-lateral.jpg',        thumb:'assets/thumbs/imagens/fachada/fachada-lateral.jpg' },
 
-    // ═══ AÉREAS (voo de pássaro + fotomontagem) ═══════════════════
-    { id:20, type:'image', category:'aereas', title:'Voo de Pássaro',              src:'assets/aereas/voo-passaro-01.jpg',  thumb:'assets/thumbs/aereas/voo-passaro-01.jpg' },
-    { id:21, type:'image', category:'aereas', title:'Voo de Pássaro',              src:'assets/aereas/voo-passaro-02.jpg',  thumb:'assets/thumbs/aereas/voo-passaro-02.jpg' },
-    { id:22, type:'image', category:'aereas', title:'Fotomontagem — Inserção Urbana', src:'assets/aereas/fotomontagem-01.jpg', thumb:'assets/thumbs/aereas/fotomontagem-01.jpg' },
+    // ═══ AÉREAS (voo de pássaro + fotomontagem de inserção urbana) ═
+    { id:20, type:'image', category:'aereas', title:'Vista Aérea — Inserção Urbana', src:'assets/imagens/aereas/insercao-urbana.jpg', thumb:'assets/thumbs/imagens/aereas/insercao-urbana.jpg' },
+    { id:21, type:'image', category:'aereas', title:'Voo de Pássaro — Rooftop',       src:'assets/imagens/aereas/voo-passaro-01.jpg',  thumb:'assets/thumbs/imagens/aereas/voo-passaro-01.jpg' },
+    { id:22, type:'image', category:'aereas', title:'Voo de Pássaro ao Entardecer',   src:'assets/imagens/aereas/voo-passaro-02.jpg',  thumb:'assets/thumbs/imagens/aereas/voo-passaro-02.jpg' },
 
-    // ═══ RESIDÊNCIAS › TIPO (182 m²) ══════════════════════════════
-    { id:30, type:'image', category:'residencial', subCategory:'res-tipo', title:'Living Integrado', src:'assets/residencial/tipo/living-01.jpg', thumb:'assets/thumbs/residencial/tipo/living-01.jpg' },
-    { id:31, type:'image', category:'residencial', subCategory:'res-tipo', title:'Living Integrado', src:'assets/residencial/tipo/living-02.jpg', thumb:'assets/thumbs/residencial/tipo/living-02.jpg' },
-    { id:32, type:'image', category:'residencial', subCategory:'res-tipo', title:'Suíte Master',     src:'assets/residencial/tipo/suite.jpg',     thumb:'assets/thumbs/residencial/tipo/suite.jpg' },
+    // ═══ LAZER › PISCINA ═══════════════════════════════════════════
+    { id:30, type:'image', category:'lazer', subCategory:'lazer-piscina', title:'Piscina — Deck com Área de Estar', src:'assets/imagens/lazer/piscina/piscina-deck.jpg',            thumb:'assets/thumbs/imagens/lazer/piscina/piscina-deck.jpg' },
+    { id:31, type:'image', category:'lazer', subCategory:'lazer-piscina', title:'Piscina — Cabana',                 src:'assets/imagens/lazer/piscina/piscina-cabana.jpg',           thumb:'assets/thumbs/imagens/lazer/piscina/piscina-cabana.jpg' },
+    { id:32, type:'image', category:'lazer', subCategory:'lazer-piscina', title:'Piscina — Espreguiçadeira',        src:'assets/imagens/lazer/piscina/piscina-espreguicadeira.jpg', thumb:'assets/thumbs/imagens/lazer/piscina/piscina-espreguicadeira.jpg' },
+    { id:33, type:'image', category:'lazer', subCategory:'lazer-piscina', title:'Piscina — Raia com Vista',         src:'assets/imagens/lazer/piscina/piscina-raia.jpg',             thumb:'assets/thumbs/imagens/lazer/piscina/piscina-raia.jpg' },
 
-    // ═══ RESIDÊNCIAS › DUPLEX (300 m²) ════════════════════════════
-    { id:40, type:'image', category:'residencial', subCategory:'res-duplex', title:'Living Duplex', src:'assets/residencial/duplex/living-01.jpg', thumb:'assets/thumbs/residencial/duplex/living-01.jpg' },
-    { id:41, type:'image', category:'residencial', subCategory:'res-duplex', title:'Living Duplex', src:'assets/residencial/duplex/living-02.jpg', thumb:'assets/thumbs/residencial/duplex/living-02.jpg' },
-    { id:42, type:'image', category:'residencial', subCategory:'res-duplex', title:'Suíte Master',  src:'assets/residencial/duplex/suite.jpg',     thumb:'assets/thumbs/residencial/duplex/suite.jpg' },
+    // ═══ LAZER › PÁTIO INTERNO ═══════════════════════════════════
+    { id:34, type:'image', category:'lazer', subCategory:'lazer-patio', title:'Pátio Interno — Lounge',        src:'assets/imagens/lazer/patio/patio-lounge.jpg',        thumb:'assets/thumbs/imagens/lazer/patio/patio-lounge.jpg' },
+    { id:35, type:'image', category:'lazer', subCategory:'lazer-patio', title:'Pátio Interno — Jardim',        src:'assets/imagens/lazer/patio/patio-jardim.jpg',        thumb:'assets/thumbs/imagens/lazer/patio/patio-jardim.jpg' },
+    { id:36, type:'image', category:'lazer', subCategory:'lazer-patio', title:'Pátio Interno — Espelho d\'Água', src:'assets/imagens/lazer/patio/patio-espelho-dagua.jpg', thumb:'assets/thumbs/imagens/lazer/patio/patio-espelho-dagua.jpg' },
 
-    // ═══ LAZER (630 m² · 4º pavimento) ════════════════════════════
-    { id:50, type:'image', category:'lazer', title:'Piscina Externa', src:'assets/lazer/piscina-externa-01.jpg', thumb:'assets/thumbs/lazer/piscina-externa-01.jpg' },
-    { id:51, type:'image', category:'lazer', title:'Piscina Externa', src:'assets/lazer/piscina-externa-02.jpg', thumb:'assets/thumbs/lazer/piscina-externa-02.jpg' },
-    { id:52, type:'image', category:'lazer', title:'Piscina Externa', src:'assets/lazer/piscina-externa-03.jpg', thumb:'assets/thumbs/lazer/piscina-externa-03.jpg' },
-    { id:53, type:'image', category:'lazer', title:'Piscina Interna', src:'assets/lazer/piscina-interna-01.jpg', thumb:'assets/thumbs/lazer/piscina-interna-01.jpg' },
-    { id:54, type:'image', category:'lazer', title:'Piscina Interna', src:'assets/lazer/piscina-interna-02.jpg', thumb:'assets/thumbs/lazer/piscina-interna-02.jpg' },
-    { id:55, type:'image', category:'lazer', title:'Academia',        src:'assets/lazer/academia.jpg',           thumb:'assets/thumbs/lazer/academia.jpg' },
-    { id:56, type:'image', category:'lazer', title:'Salão de Festas', src:'assets/lazer/salao-de-festas-01.jpg', thumb:'assets/thumbs/lazer/salao-de-festas-01.jpg' },
-    { id:57, type:'image', category:'lazer', title:'Salão de Festas', src:'assets/lazer/salao-de-festas-02.jpg', thumb:'assets/thumbs/lazer/salao-de-festas-02.jpg' },
-    { id:58, type:'image', category:'lazer', title:'Espaço Gourmet',  src:'assets/lazer/espaco-gourmet.jpg',     thumb:'assets/thumbs/lazer/espaco-gourmet.jpg' },
-    { id:59, type:'image', category:'lazer', title:'Sala de Jogos',   src:'assets/lazer/sala-de-jogos.jpg',      thumb:'assets/thumbs/lazer/sala-de-jogos.jpg' },
-    { id:60, type:'image', category:'lazer', title:'Espaço Kids',     src:'assets/lazer/espaco-kids-01.jpg',     thumb:'assets/thumbs/lazer/espaco-kids-01.jpg' },
-    { id:61, type:'image', category:'lazer', title:'Espaço Kids',     src:'assets/lazer/espaco-kids-02.jpg',     thumb:'assets/thumbs/lazer/espaco-kids-02.jpg' },
-    { id:62, type:'image', category:'lazer', title:'Garagem',         src:'assets/lazer/garagem.jpg',            thumb:'assets/thumbs/lazer/garagem.jpg' },
+    // ═══ LAZER › PRAÇA (praça de gentileza urbana) ══════════════
+    { id:37, type:'image', category:'lazer', subCategory:'lazer-praca', title:'Praça de Gentileza Urbana',            src:'assets/imagens/lazer/praca/praca-gentileza-01.jpg', thumb:'assets/thumbs/imagens/lazer/praca/praca-gentileza-01.jpg' },
+    { id:38, type:'image', category:'lazer', subCategory:'lazer-praca', title:'Praça de Gentileza Urbana — Detalhe',  src:'assets/imagens/lazer/praca/praca-gentileza-02.jpg', thumb:'assets/thumbs/imagens/lazer/praca/praca-gentileza-02.jpg' },
 
-    // ═══ PLANTAS › TÉRREO & LAZER (sobreposição de pavimentos) ════
-    { id:80, type:'cobertura-plan', category:'plantas', subCategory:'pl-terreo-lazer',
-      title:'Térreo & Lazer', subtitle:'Pavimentos comuns', area:'', viewBothLabel:'Sobrepor térreo + lazer', floors:[
-        { label:'Térreo', src:'assets/plantas/terreo.png', thumb:'assets/thumbs/plantas/terreo.jpg' },
-        { label:'Lazer',  src:'assets/plantas/lazer.png',  thumb:'assets/thumbs/plantas/lazer.jpg' },
+    // ═══ LAZER › GOURMET (rooftop + salão) ══════════════════════
+    { id:39, type:'image', category:'lazer', subCategory:'lazer-gourmet', title:'Terraço Gourmet — Vista Panorâmica', src:'assets/imagens/lazer/gourmet/gourmet-terraco.jpg',         thumb:'assets/thumbs/imagens/lazer/gourmet/gourmet-terraco.jpg' },
+    { id:40, type:'image', category:'lazer', subCategory:'lazer-gourmet', title:'Espaço Gourmet — Churrasqueira',     src:'assets/imagens/lazer/gourmet/gourmet-churrasqueira.jpg',   thumb:'assets/thumbs/imagens/lazer/gourmet/gourmet-churrasqueira.jpg' },
+    { id:41, type:'image', category:'lazer', subCategory:'lazer-gourmet', title:'Espaço Gourmet — Mesa Comunitária',  src:'assets/imagens/lazer/gourmet/gourmet-mesa-comunitaria.jpg', thumb:'assets/thumbs/imagens/lazer/gourmet/gourmet-mesa-comunitaria.jpg' },
+    { id:42, type:'image', category:'lazer', subCategory:'lazer-gourmet', title:'Espaço Gourmet — Salão',             src:'assets/imagens/lazer/gourmet/gourmet-salao.jpg',           thumb:'assets/thumbs/imagens/lazer/gourmet/gourmet-salao.jpg' },
+
+    // ═══ LAZER › KIDS & PLAYGROUND ═══════════════════════════════
+    { id:43, type:'image', category:'lazer', subCategory:'lazer-kids', title:'Playground',   src:'assets/imagens/lazer/kids/playground.jpg',   thumb:'assets/thumbs/imagens/lazer/kids/playground.jpg' },
+    { id:44, type:'image', category:'lazer', subCategory:'lazer-kids', title:'Espaço Kids',  src:'assets/imagens/lazer/kids/espaco-kids.jpg',  thumb:'assets/thumbs/imagens/lazer/kids/espaco-kids.jpg' },
+
+    // ═══ LAZER › ÁREAS COMUNS (jogos, academia, recepção) ═══════
+    { id:45, type:'image', category:'lazer', subCategory:'lazer-comum', title:'Sala de Jogos', src:'assets/imagens/lazer/comum/sala-de-jogos.jpg', thumb:'assets/thumbs/imagens/lazer/comum/sala-de-jogos.jpg' },
+    { id:46, type:'image', category:'lazer', subCategory:'lazer-comum', title:'Academia',      src:'assets/imagens/lazer/comum/academia.jpg',      thumb:'assets/thumbs/imagens/lazer/comum/academia.jpg' },
+    { id:47, type:'image', category:'lazer', subCategory:'lazer-comum', title:'Recepção',      src:'assets/imagens/lazer/comum/recepcao.jpg',      thumb:'assets/thumbs/imagens/lazer/comum/recepcao.jpg' },
+
+    // ═══ RESIDÊNCIAS › APARTAMENTO 103 ═══════════════════════════
+    { id:50, type:'image', category:'residencial', subCategory:'res-103', title:'Sala de Estar', src:'assets/imagens/residencial/apto-103/sala.jpg',   thumb:'assets/thumbs/imagens/residencial/apto-103/sala.jpg' },
+    { id:51, type:'image', category:'residencial', subCategory:'res-103', title:'Quarto',        src:'assets/imagens/residencial/apto-103/quarto.jpg', thumb:'assets/thumbs/imagens/residencial/apto-103/quarto.jpg' },
+
+    // ═══ RESIDÊNCIAS › APARTAMENTO 106 · GARDEN ══════════════════
+    { id:52, type:'image', category:'residencial', subCategory:'res-106', title:'Sala Ampliada',   src:'assets/imagens/residencial/apto-106/sala-ampliada.jpg', thumb:'assets/thumbs/imagens/residencial/apto-106/sala-ampliada.jpg' },
+    { id:53, type:'image', category:'residencial', subCategory:'res-106', title:'Garden Privativo', src:'assets/imagens/residencial/apto-106/garden.jpg',       thumb:'assets/thumbs/imagens/residencial/apto-106/garden.jpg' },
+
+    // ═══ PLANTAS › IMPLANTAÇÕES (sobreposição de pavimentos — subsolo à cobertura) ═══
+    { id:80, type:'cobertura-plan', category:'plantas', subCategory:'pl-implantacoes',
+      title:'Implantações', subtitle:'Subsolo à cobertura', area:'', floors:[
+        { label:'Subsolo',    src:'assets/plantas/implantacoes/subsolo.jpg',     thumb:'assets/thumbs/plantas/implantacoes/subsolo.jpg' },
+        { label:'Térreo',     src:'assets/plantas/implantacoes/terreo.jpg',      thumb:'assets/thumbs/plantas/implantacoes/terreo.jpg' },
+        { label:'1º Pav.',    src:'assets/plantas/implantacoes/pavimento-01.jpg', thumb:'assets/thumbs/plantas/implantacoes/pavimento-01.jpg' },
+        { label:'2º Pav.',    src:'assets/plantas/implantacoes/pavimento-02.jpg', thumb:'assets/thumbs/plantas/implantacoes/pavimento-02.jpg' },
+        { label:'3º Pav.',    src:'assets/plantas/implantacoes/pavimento-03.jpg', thumb:'assets/thumbs/plantas/implantacoes/pavimento-03.jpg' },
+        { label:'4º Pav.',    src:'assets/plantas/implantacoes/pavimento-04.jpg', thumb:'assets/thumbs/plantas/implantacoes/pavimento-04.jpg' },
+        { label:'5º Pav.',    src:'assets/plantas/implantacoes/pavimento-05.jpg', thumb:'assets/thumbs/plantas/implantacoes/pavimento-05.jpg' },
+        { label:'Cobertura',  src:'assets/plantas/implantacoes/cobertura.jpg',    thumb:'assets/thumbs/plantas/implantacoes/cobertura.jpg' },
     ]},
 
-    // ═══ PLANTAS › TIPO (182 m²) ══════════════════════════════════
-    { id:90, type:'image', category:'plantas', subCategory:'pl-tipo', isPlant:true, title:'Residências Tipo', subtitle:'182 m² · 3 suítes', src:'assets/plantas/tipo-182.png', thumb:'assets/thumbs/plantas/tipo-182.jpg' },
+    // ═══ PLANTAS › APARTAMENTOS (unidades tipo, colunas 01–04) ══
+    { id:90, type:'image', category:'plantas', subCategory:'pl-unidades', isPlant:true, title:'Apartamento Coluna 01', subtitle:'68,71 m² · 2 dormitórios (1 suíte)', src:'assets/plantas/unidades/coluna-01.jpg', thumb:'assets/thumbs/plantas/unidades/coluna-01.jpg' },
+    { id:91, type:'image', category:'plantas', subCategory:'pl-unidades', isPlant:true, title:'Apartamento Coluna 02', subtitle:'68,59 m² · 2 suítes',                 src:'assets/plantas/unidades/coluna-02.jpg', thumb:'assets/thumbs/plantas/unidades/coluna-02.jpg' },
+    { id:92, type:'image', category:'plantas', subCategory:'pl-unidades', isPlant:true, title:'Apartamento Coluna 03', subtitle:'64,68 m² · 2 suítes',                 src:'assets/plantas/unidades/coluna-03.jpg', thumb:'assets/thumbs/plantas/unidades/coluna-03.jpg' },
+    { id:93, type:'image', category:'plantas', subCategory:'pl-unidades', isPlant:true, title:'Apartamento Coluna 04', subtitle:'85,19 m² · 3 dormitórios (2 suítes)', src:'assets/plantas/unidades/coluna-04.jpg', thumb:'assets/thumbs/plantas/unidades/coluna-04.jpg' },
 
-    // ═══ PLANTAS › DUPLEX (300 m² · sobreposição inferior + superior) ═══
-    { id:95, type:'cobertura-plan', category:'plantas', subCategory:'pl-duplex',
-      title:'Residências Duplex', subtitle:'17º e 18º pavimento', area:'300 m²', viewBothLabel:'Sobrepor os dois pisos', floors:[
-        { label:'Piso Inferior', src:'assets/plantas/duplex-inferior.png', thumb:'assets/thumbs/plantas/duplex-inferior.jpg' },
-        { label:'Piso Superior', src:'assets/plantas/duplex-superior.png', thumb:'assets/thumbs/plantas/duplex-superior.jpg' },
+    // ═══ PLANTAS › APARTAMENTOS › COLUNA 06 · GARDEN (sobreposição padrão × sala ampliada) ═══
+    { id:95, type:'cobertura-plan', category:'plantas', subCategory:'pl-unidades',
+      title:'Apartamento Coluna 06 · Garden', subtitle:'91,00 m² + jardim privativo de 41,32 m²', area:'', viewBothLabel:'Sobrepor planta padrão e sala ampliada', floors:[
+        { label:'Planta Padrão', src:'assets/plantas/unidades/coluna-06-padrao.jpg',        thumb:'assets/thumbs/plantas/unidades/coluna-06-padrao.jpg' },
+        { label:'Sala Ampliada', src:'assets/plantas/unidades/coluna-06-sala-ampliada.jpg', thumb:'assets/thumbs/plantas/unidades/coluna-06-sala-ampliada.jpg' },
     ]},
   ],
 };
@@ -1004,9 +1034,8 @@ const MODE = (() => {
 // Categorias exibidas no filtro principal conforme modo
 const DISPLAY_CATS = (() => {
   if (MODE === 'plantas') return [
-    { id: 'pl-terreo-lazer', label: 'Térreo & Lazer' },
-    { id: 'pl-tipo',         label: 'Tipo' },
-    { id: 'pl-duplex',       label: 'Duplex' },
+    { id: 'pl-implantacoes', label: 'Implantações' },
+    { id: 'pl-unidades',     label: 'Apartamentos' },
   ];
   if (MODE === 'imagens') return GALLERY_CONFIG.categories.filter(c => c.id !== 'plantas');
   return GALLERY_CONFIG.categories;
@@ -1366,10 +1395,10 @@ function closeGallery() {
 function init() {
   // Filtro inicial depende do modo
   if (MODE === 'plantas') {
-    st.cat = 'pl-terreo-lazer';  // primeira tipologia de plantas
+    st.cat = 'pl-implantacoes';  // primeira tipologia de plantas
     st.sub = null;
   } else {
-    st.cat = DISPLAY_CATS[0].id;               // 'residencial'
+    st.cat = DISPLAY_CATS[0].id;               // 'fachada'
     const c0 = getCat(st.cat);
     st.sub = (c0 && c0.subs && c0.subs.length) ? c0.subs[0].id : null;  // pré-seleciona 1ª sub
   }

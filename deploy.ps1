@@ -1,5 +1,5 @@
 <#
-  deploy.ps1 — Deploy da galeria Nuar Residence (Tauf) para o AWS S3.
+  deploy.ps1 — Deploy da galeria GHC Vertus Fascinna para o AWS S3.
 
   Uso:
     ./deploy.ps1             # sync completo + cache-control no HTML/JS
@@ -17,7 +17,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$Bucket = 's3://skylineip/Tour Virtual/tauf/ferramentas/galeria'
+$Bucket = 's3://skylineip/Tour Virtual/ghc/vertus fascinna/ferramentas/galeria'
 $NoCache = 'no-cache,no-store,must-revalidate'
 
 # Garante que o script roda a partir da pasta do projeto
@@ -103,4 +103,4 @@ else {
 }
 
 Write-Host 'Deploy concluido.' -ForegroundColor Green
-Write-Host "Base: https://skylineip.s3.sa-east-1.amazonaws.com/Tour+Virtual/tauf/ferramentas/galeria/" -ForegroundColor DarkGray
+Write-Host "Base: https://skylineip.s3.sa-east-1.amazonaws.com/Tour+Virtual/ghc/vertus+fascinna/ferramentas/galeria/" -ForegroundColor DarkGray
