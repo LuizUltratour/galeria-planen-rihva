@@ -49,10 +49,16 @@
     #g-header {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: space-between;
       padding: 12px 24px;
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
+    }
+
+    #g-logo {
+      height: 26px;
+      width: auto;
+      display: block;
     }
 
     #btn-close {
@@ -100,7 +106,7 @@
       transition: background 0.22s var(--ease), color 0.22s var(--ease), border-color 0.22s var(--ease), transform 0.15s var(--ease);
     }
     .f-btn:hover { background: #F3C67E; }
-    .f-btn.active { background: var(--accent); color: #FFFFFF; border-color: var(--accent); box-shadow: 0 4px 14px rgba(46,56,32,0.28); }
+    .f-btn.active { background: var(--accent); color: #FFFFFF; border: 2px solid #F9D59D; box-shadow: 0 4px 14px rgba(46,56,32,0.28); }
     .f-btn:active { transform: scale(0.97); }
 
     /* Sub-filter */
@@ -138,7 +144,7 @@
       transition: opacity 0.2s, border-color 0.2s, background 0.2s, color 0.2s;
     }
     .sf-btn:hover { opacity: 1; background: #F3C67E; }
-    .sf-btn.active { background: var(--accent); color: var(--white); border-color: var(--accent); opacity: 1; }
+    .sf-btn.active { background: var(--accent); color: var(--white); border: 2px solid #F9D59D; opacity: 1; }
 
     /* ── GALLERY SCROLL ── */
     #g-scroll {
@@ -294,18 +300,8 @@
     @media (max-width: 420px) { .g-card.cob-card { grid-column: span 1; } }
 
     /* ── PLANTAS MODE ── */
-    #g-grid.plantas-mode {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      padding: 10px;
-    }
-    #g-grid.plantas-mode .g-card.is-plant,
-    #g-grid.plantas-mode .g-card.cob-card {
-      height: 420px;
-    }
-    #g-grid.plantas-mode .g-card.is-plant {
-      aspect-ratio: unset;
-    }
+    /* Cards de planta usam o mesmo grid/tamanho dos cards de imagem (#g-grid base);
+       só o card de abas (cobertura-plan) tem layout próprio, ver .cob-card acima. */
     #g-grid.plantas-mode .g-card.cob-card {
       grid-column: span 1;
     }
@@ -313,7 +309,6 @@
       min-height: 0;
     }
     @media (max-width: 700px) {
-      #g-grid.plantas-mode { grid-template-columns: 1fr; gap: 8px; padding: 8px; }
       #g-grid.plantas-mode .g-card.cob-card { grid-column: span 1; }
     }
 
@@ -813,6 +808,7 @@
 
   <!-- Header -->
   <header id="g-header">
+    <img id="g-logo" src="assets/rihva.png" alt="Rihva">
     <button id="btn-close" title="Fechar galeria" aria-label="Fechar"></button>
   </header>
 
