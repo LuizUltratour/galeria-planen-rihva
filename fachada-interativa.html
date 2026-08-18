@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Fachada Interativa — GHC Vertus Fascinna</title>
+  <title>Fachada Interativa — Planen Rihva</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -44,11 +44,11 @@
     #fi-brand .b-name { font-family: var(--font-serif); font-size: 20px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; }
     #fi-brand .b-sub  { font-size: 9.5px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.5; margin-top: 3px; }
     #btn-close {
-      width: 38px; height: 38px; border: 1px solid var(--border-strong); background: transparent; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--dark);
-      transition: background 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease); flex-shrink: 0;
+      width: 38px; height: 38px; border: none;
+      background: url('assets/close-normal-dia.png') center/contain no-repeat;
+      cursor: pointer; flex-shrink: 0; padding: 0;
     }
-    @media (hover: hover) { #btn-close:hover { background: var(--dark); color: var(--bg); border-color: var(--dark); } }
+    @media (hover: hover) { #btn-close:hover { background-image: url('assets/close-hover-dia.png'); } }
 
     /* ── MAIN ── */
     #fi-main { flex: 1; min-height: 0; display: flex; }
@@ -289,9 +289,10 @@
     }
     #fi-modal-close {
       position: absolute; top: 12px; right: 12px; width: 40px; height: 40px;
-      border: 1px solid var(--border-strong); background: rgba(255,255,255,0.5); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; color: var(--dark); cursor: pointer;
+      border: none; background: url('assets/close-normal-dia.png') center/contain no-repeat;
+      cursor: pointer; padding: 0;
     }
+    @media (hover: hover) { #fi-modal-close:hover { background-image: url('assets/close-hover-dia.png'); } }
     #fi-modal .m-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-soft); }
     #fi-modal-title { font-family: var(--font-serif); font-size: 26px; font-weight: 400; line-height: 1.1; margin-top: 4px; }
     #fi-modal-sub { font-size: 12.5px; line-height: 1.5; color: var(--text-soft); margin-top: 6px; }
@@ -356,19 +357,17 @@
 <div id="fi-root">
   <header id="fi-header">
     <div id="fi-brand">
-      <span class="b-name">Vertus Fascinna</span>
+      <span class="b-name">Planen Rihva</span>
       <span class="b-sub">Fachada Interativa</span>
     </div>
-    <button id="btn-close" title="Fechar" aria-label="Fechar">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    </button>
+    <button id="btn-close" title="Fechar" aria-label="Fechar"></button>
   </header>
 
   <div id="fi-main">
     <!-- STAGE -->
     <div id="fi-stage">
       <div id="fi-tower">
-        <img class="fi-placeholder" id="fi-ph" alt="Fachada Vertus Fascinna" draggable="false">
+        <img class="fi-placeholder" id="fi-ph" alt="Fachada Planen Rihva" draggable="false">
         <!-- 3 faixas (partes separadas) injetadas via JS por cima -->
         <div id="fi-scale"></div>
         <div id="fi-zones"></div>
@@ -382,7 +381,7 @@
 
     <!-- PANEL -->
     <aside id="fi-panel">
-      <span class="fi-eyebrow">GHC Vertus Fascinna</span>
+      <span class="fi-eyebrow">Planen Rihva</span>
       <h1 class="fi-h1">Explore a torre por faixa de andares</h1>
       <p class="fi-lead">Escolha uma faixa para destacá-la na fachada e abrir a vista 360° de um andar.</p>
 
@@ -417,10 +416,8 @@
 <div id="fi-modal" aria-hidden="true">
   <div id="fi-modal-backdrop"></div>
   <div id="fi-modal-card" role="dialog" aria-modal="true" aria-labelledby="fi-modal-title">
-    <button id="fi-modal-close" aria-label="Fechar">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="16" height="16"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    </button>
-    <span class="m-eyebrow">GHC Vertus Fascinna</span>
+    <button id="fi-modal-close" aria-label="Fechar"></button>
+    <span class="m-eyebrow">Planen Rihva</span>
     <h2 id="fi-modal-title">Faixa</h2>
     <p id="fi-modal-sub">Escolha o andar para abrir a vista 360°.</p>
     <div id="fi-modal-chips"></div>

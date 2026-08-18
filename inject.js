@@ -1,7 +1,7 @@
 (function (w, d) {
   'use strict';
 
-  var BASE = 'https://skylineip.s3.sa-east-1.amazonaws.com/Tour+Virtual/ghc/vertus+fascinna/ferramentas/galeria/';
+  var BASE = 'https://skylineip.s3.sa-east-1.amazonaws.com/Tour+Virtual/planen/galeria-planen-rihva/';
   var GALLERY_URL       = BASE + 'index.html';
   var VIDEO_GALLERY_URL = BASE + 'video-gallery.html';
   var FACHADA_URL       = BASE + 'fachada-interativa.html';

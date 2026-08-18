@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Galeria — GHC Vertus Fascinna</title>
+  <title>Galeria — Planen Rihva</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      /* GHC Vertus Fascinna — tema areia-claro/verde-oliva.
+      /* Planen Rihva — tema areia-claro/verde-oliva.
          --bg = creme (FBF0E5) · --dark = verde-oliva (2E3820) · --accent = verde-oliva */
       --bg: #FBF0E5;            /* creme — fundo principal */
       --surface: #F1E4D7;       /* superfície de card (skeleton) */
@@ -33,7 +33,7 @@
     html, body {
       height: 100%;
       overflow: hidden;
-      background: var(--bg);
+      background: var(--bg) url('assets/loading.gif') center/cover no-repeat fixed;
       color: var(--dark);
       font-family: var(--font-sans);
     }
@@ -43,7 +43,6 @@
       display: flex;
       flex-direction: column;
       height: 100vh;
-      background: var(--bg);
     }
 
     /* ── HEADER ── */
@@ -59,17 +58,12 @@
     #btn-close {
       width: 38px;
       height: 38px;
-      border: 1px solid var(--border-strong);
-      background: transparent;
+      border: none;
+      background: url('assets/close-normal-dia.png') center/contain no-repeat;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      transition: background 0.25s var(--ease), color 0.25s var(--ease);
-      color: var(--dark);
+      padding: 0;
     }
-    #btn-close:hover { background: var(--dark); color: var(--bg); border-color: var(--dark); }
+    #btn-close:hover { background-image: url('assets/close-hover-dia.png'); }
 
     /* ── FILTER SECTION ── */
     #g-filters {
@@ -574,16 +568,13 @@
     }
     #lb-close {
       width: 38px; height: 38px;
-      border: 1px solid rgba(255,255,255,0.25);
-      background: transparent;
+      border: none;
+      background: url('assets/close-normal-dia.png') center/contain no-repeat;
       cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 50%;
-      color: #FFFFFF;
-      transition: background 0.22s, border-color 0.22s;
       flex-shrink: 0;
+      padding: 0;
     }
-    #lb-close:hover { background: var(--accent); color: #FFFFFF; border-color: var(--accent); }
+    #lb-close:hover { background-image: url('assets/close-hover-dia.png'); }
 
     #lb-body {
       flex: 1;
@@ -642,18 +633,18 @@
       top: 50%;
       transform: translateY(-50%);
       width: 46px; height: 46px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: transparent;
+      border: none;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
       cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 50%;
-      color: #FFFFFF;
-      transition: background 0.22s, border-color 0.22s;
+      padding: 0;
     }
-    .lb-nav:hover { background: var(--accent); border-color: var(--accent); }
     .lb-nav:disabled { opacity: 0.18; cursor: default; }
-    #lb-prev { left: 20px; }
-    #lb-next { right: 20px; }
+    #lb-prev { left: 20px; background-image: url('assets/voltar-normal-dia.png'); }
+    #lb-prev:hover { background-image: url('assets/voltar-hover-dia.png'); }
+    #lb-next { right: 20px; background-image: url('assets/proximo-normal-dia.png'); }
+    #lb-next:hover { background-image: url('assets/proximo-hover-dia.png'); }
 
     #lb-foot {
       padding: 12px 32px;
@@ -771,8 +762,6 @@
       /* arrows float over image on mobile */
       #lb-prev, #lb-next {
         width: 38px; height: 38px;
-        background: rgba(28,34,19,0.6);
-        border-color: transparent;
       }
       #lb-prev { left: 8px; }
       #lb-next { right: 8px; }
@@ -815,11 +804,7 @@
 
   <!-- Header -->
   <header id="g-header">
-    <button id="btn-close" title="Fechar galeria" aria-label="Fechar">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16">
-        <path d="M18 6L6 18M6 6l12 12"/>
-      </svg>
-    </button>
+    <button id="btn-close" title="Fechar galeria" aria-label="Fechar"></button>
   </header>
 
   <!-- Filters -->
@@ -850,18 +835,10 @@
       <div id="lb-sub"></div>
     </div>
     <div id="lb-counter"></div>
-    <button id="lb-close" aria-label="Fechar">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="15" height="15">
-        <path d="M18 6L6 18M6 6l12 12"/>
-      </svg>
-    </button>
+    <button id="lb-close" aria-label="Fechar"></button>
   </div>
   <div id="lb-body">
-    <button id="lb-prev" class="lb-nav" aria-label="Anterior">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20">
-        <path d="M15 18l-6-6 6-6"/>
-      </svg>
-    </button>
+    <button id="lb-prev" class="lb-nav" aria-label="Anterior"></button>
     <img id="lb-img" src="" alt="">
     <div id="lb-dual">
       <div class="dual-col" id="dc-a">
@@ -873,11 +850,7 @@
         <img src="" alt="">
       </div>
     </div>
-    <button id="lb-next" class="lb-nav" aria-label="Próximo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20">
-        <path d="M9 18l6-6-6-6"/>
-      </svg>
-    </button>
+    <button id="lb-next" class="lb-nav" aria-label="Próximo"></button>
   </div>
   <div id="lb-foot">
     <div id="lb-zoom-bar">
@@ -897,116 +870,116 @@
 // os campos src com os nomes exatos dos arquivos.
 // ================================================================
 const GALLERY_CONFIG = {
-  projectName: 'GHC VERTUS FASCINNA',
-  projectSub:  'João Pessoa · PB',
+  projectName: 'PLANEN RIHVA',
+  projectSub:  '',
 
   categories: [
     { id: 'fachada', label: 'Fachada' },
-    { id: 'aereas',  label: 'Aéreas' },
     {
-      id: 'lazer', label: 'Lazer',
+      id: 'areas-comuns', label: 'Áreas Comuns',
       subs: [
-        { id: 'lazer-piscina', label: 'Piscina' },
-        { id: 'lazer-patio',   label: 'Pátio Interno' },
-        { id: 'lazer-praca',   label: 'Praça' },
-        { id: 'lazer-gourmet', label: 'Gourmet' },
-        { id: 'lazer-kids',    label: 'Kids & Playground' },
-        { id: 'lazer-comum',   label: 'Áreas Comuns' },
+        { id: 'ac-hall-inf',  label: 'Hall de Entrada' },
+        { id: 'ac-hall-sup',  label: 'Hall Superior' },
+        { id: 'ac-salao',     label: 'Salão de Festas' },
+        { id: 'ac-gourmet',   label: 'Gourmet' },
+        { id: 'ac-academia',  label: 'Academia' },
+        { id: 'ac-jogos',     label: 'Sala de Jogos' },
+        { id: 'ac-pet',       label: 'Pet Place' },
+        { id: 'ac-piscina',   label: 'Piscina' },
+        { id: 'ac-externo',   label: 'Área Externa' },
+        { id: 'ac-delivery',  label: 'Delivery' },
+        { id: 'ac-garagem',   label: 'Garagem' },
       ]
     },
-    {
-      id: 'residencial', label: 'Residências',
-      subs: [
-        { id: 'res-103', label: 'Apartamento 103' },
-        { id: 'res-106', label: 'Apartamento 106 · Garden' },
-      ]
-    },
-    {
-      id: 'plantas', label: 'Plantas',
-      subs: [
-        { id: 'pl-implantacoes', label: 'Implantações' },
-        { id: 'pl-unidades',     label: 'Apartamentos' },
-      ]
-    },
+    { id: 'plantas', label: 'Plantas' },
   ],
 
   items: [
 
     // ═══ FACHADA ═══════════════════════════════════════════════════
-    { id:1, type:'image', category:'fachada', title:'Vista Frontal',            src:'assets/imagens/fachada/fachada-frontal.jpg',        thumb:'assets/thumbs/imagens/fachada/fachada-frontal.jpg' },
-    { id:2, type:'image', category:'fachada', title:'Vista de Esquina',         src:'assets/imagens/fachada/fachada-esquina.jpg',        thumb:'assets/thumbs/imagens/fachada/fachada-esquina.jpg' },
-    { id:3, type:'image', category:'fachada', title:'Entrada Principal',        src:'assets/imagens/fachada/fachada-entrada.jpg',        thumb:'assets/thumbs/imagens/fachada/fachada-entrada.jpg' },
-    { id:4, type:'image', category:'fachada', title:'Vista de Baixo para Cima', src:'assets/imagens/fachada/fachada-vista-inferior.jpg', thumb:'assets/thumbs/imagens/fachada/fachada-vista-inferior.jpg' },
-    { id:5, type:'image', category:'fachada', title:'Vista Lateral',           src:'assets/imagens/fachada/fachada-lateral.jpg',        thumb:'assets/thumbs/imagens/fachada/fachada-lateral.jpg' },
+    { id:1,  type:'image', category:'fachada', title:'Fachada — Vista 1',  src:'assets/imagens/fachadas/RIHVA - Arquitetônico (1).jpg',  thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (1).jpg' },
+    { id:2,  type:'image', category:'fachada', title:'Fachada — Vista 2',  src:'assets/imagens/fachadas/RIHVA - Arquitetônico (2).jpg',  thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (2).jpg' },
+    { id:3,  type:'image', category:'fachada', title:'Fachada — Vista 3',  src:'assets/imagens/fachadas/RIHVA - Arquitetônico (3).jpg',  thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (3).jpg' },
+    { id:4,  type:'image', category:'fachada', title:'Fachada — Vista 4',  src:'assets/imagens/fachadas/RIHVA - Arquitetônico (4).jpg',  thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (4).jpg' },
+    { id:5,  type:'image', category:'fachada', title:'Fachada — Vista 5',  src:'assets/imagens/fachadas/RIHVA - Arquitetônico (5).jpg',  thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (5).jpg' },
+    { id:6,  type:'image', category:'fachada', title:'Fachada — Vista 6',  src:'assets/imagens/fachadas/RIHVA - Arquitetônico (6).jpg',  thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (6).jpg' },
+    { id:7,  type:'image', category:'fachada', title:'Fachada — Vista 7',  src:'assets/imagens/fachadas/RIHVA - Arquitetônico (7).jpg',  thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (7).jpg' },
+    { id:8,  type:'image', category:'fachada', title:'Fachada — Vista 8',  src:'assets/imagens/fachadas/RIHVA - Arquitetônico (8).jpg',  thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (8).jpg' },
+    { id:9,  type:'image', category:'fachada', title:'Fachada — Vista 9',  src:'assets/imagens/fachadas/RIHVA - Arquitetônico (9).jpg',  thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (9).jpg' },
+    { id:10, type:'image', category:'fachada', title:'Fachada — Vista 10', src:'assets/imagens/fachadas/RIHVA - Arquitetônico (10).jpg', thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (10).jpg' },
+    { id:11, type:'image', category:'fachada', title:'Fachada — Vista 11', src:'assets/imagens/fachadas/RIHVA - Arquitetônico (11).jpg', thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (11).jpg' },
+    { id:12, type:'image', category:'fachada', title:'Fachada — Vista 12', src:'assets/imagens/fachadas/RIHVA - Arquitetônico (12).jpg', thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (12).jpg' },
+    { id:13, type:'image', category:'fachada', title:'Fachada — Vista 13', src:'assets/imagens/fachadas/RIHVA - Arquitetônico (13).jpg', thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (13).jpg' },
+    { id:14, type:'image', category:'fachada', title:'Fachada — Vista 14', src:'assets/imagens/fachadas/RIHVA - Arquitetônico (14).jpg', thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (14).jpg' },
+    { id:15, type:'image', category:'fachada', title:'Fachada — Vista 15', src:'assets/imagens/fachadas/RIHVA - Arquitetônico (15).jpg', thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (15).jpg' },
+    { id:16, type:'image', category:'fachada', title:'Fachada — Vista 16', src:'assets/imagens/fachadas/RIHVA - Arquitetônico (16).jpg', thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (16).jpg' },
+    { id:17, type:'image', category:'fachada', title:'Fachada — Vista 17', src:'assets/imagens/fachadas/RIHVA - Arquitetônico (17).jpg', thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (17).jpg' },
+    { id:18, type:'image', category:'fachada', title:'Fachada — Vista 18', src:'assets/imagens/fachadas/RIHVA - Arquitetônico (18).jpg', thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (18).jpg' },
+    { id:19, type:'image', category:'fachada', title:'Fachada — Vista 19', src:'assets/imagens/fachadas/RIHVA - Arquitetônico (19).jpg', thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (19).jpg' },
+    { id:20, type:'image', category:'fachada', title:'Fachada — Vista 20', src:'assets/imagens/fachadas/RIHVA - Arquitetônico (20).jpg', thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (20).jpg' },
+    { id:21, type:'image', category:'fachada', title:'Fachada — Vista 21', src:'assets/imagens/fachadas/RIHVA - Arquitetônico (21).jpg', thumb:'assets/thumbs/imagens/fachadas/rihva - arquitetônico (21).jpg' },
 
-    // ═══ AÉREAS (voo de pássaro + fotomontagem de inserção urbana) ═
-    { id:20, type:'image', category:'aereas', title:'Vista Aérea — Inserção Urbana', src:'assets/imagens/aereas/insercao-urbana.jpg', thumb:'assets/thumbs/imagens/aereas/insercao-urbana.jpg' },
-    { id:21, type:'image', category:'aereas', title:'Voo de Pássaro — Rooftop',       src:'assets/imagens/aereas/voo-passaro-01.jpg',  thumb:'assets/thumbs/imagens/aereas/voo-passaro-01.jpg' },
-    { id:22, type:'image', category:'aereas', title:'Voo de Pássaro ao Entardecer',   src:'assets/imagens/aereas/voo-passaro-02.jpg',  thumb:'assets/thumbs/imagens/aereas/voo-passaro-02.jpg' },
+    // ═══ ÁREAS COMUNS › HALL DE ENTRADA ═══════════════════════════
+    { id:30, type:'image', category:'areas-comuns', subCategory:'ac-hall-inf', title:'Hall de Entrada — Vista 1', src:'assets/imagens/areas comuns/RIHVA - 01 - HALL INF (1).jpg', thumb:'assets/thumbs/imagens/areas comuns/rihva - 01 - hall inf (1).jpg' },
+    { id:31, type:'image', category:'areas-comuns', subCategory:'ac-hall-inf', title:'Hall de Entrada — Vista 2', src:'assets/imagens/areas comuns/RIHVA - 01 - HALL INF (2).jpg', thumb:'assets/thumbs/imagens/areas comuns/rihva - 01 - hall inf (2).jpg' },
+    { id:32, type:'image', category:'areas-comuns', subCategory:'ac-hall-inf', title:'Hall de Entrada — Vista 3', src:'assets/imagens/areas comuns/RIHVA - 01 - HALL INF (3).jpg', thumb:'assets/thumbs/imagens/areas comuns/rihva - 01 - hall inf (3).jpg' },
 
-    // ═══ LAZER › PISCINA ═══════════════════════════════════════════
-    { id:30, type:'image', category:'lazer', subCategory:'lazer-piscina', title:'Piscina — Deck com Área de Estar', src:'assets/imagens/lazer/piscina/piscina-deck.jpg',            thumb:'assets/thumbs/imagens/lazer/piscina/piscina-deck.jpg' },
-    { id:31, type:'image', category:'lazer', subCategory:'lazer-piscina', title:'Piscina — Cabana',                 src:'assets/imagens/lazer/piscina/piscina-cabana.jpg',           thumb:'assets/thumbs/imagens/lazer/piscina/piscina-cabana.jpg' },
-    { id:32, type:'image', category:'lazer', subCategory:'lazer-piscina', title:'Piscina — Espreguiçadeira',        src:'assets/imagens/lazer/piscina/piscina-espreguicadeira.jpg', thumb:'assets/thumbs/imagens/lazer/piscina/piscina-espreguicadeira.jpg' },
-    { id:33, type:'image', category:'lazer', subCategory:'lazer-piscina', title:'Piscina — Raia com Vista',         src:'assets/imagens/lazer/piscina/piscina-raia.jpg',             thumb:'assets/thumbs/imagens/lazer/piscina/piscina-raia.jpg' },
+    // ═══ ÁREAS COMUNS › HALL SUPERIOR ═══════════════════════════
+    { id:33, type:'image', category:'areas-comuns', subCategory:'ac-hall-sup', title:'Hall Superior — Vista 1', src:'assets/imagens/areas comuns/RIHVA - 02 - HALL SUP (1).jpeg', thumb:'assets/thumbs/imagens/areas comuns/rihva - 02 - hall sup (1).jpg' },
+    { id:34, type:'image', category:'areas-comuns', subCategory:'ac-hall-sup', title:'Hall Superior — Vista 2', src:'assets/imagens/areas comuns/RIHVA - 02 - HALL SUP (2).jpg',  thumb:'assets/thumbs/imagens/areas comuns/rihva - 02 - hall sup (2).jpg' },
+    { id:35, type:'image', category:'areas-comuns', subCategory:'ac-hall-sup', title:'Hall Superior — Vista 3', src:'assets/imagens/areas comuns/RIHVA - 02 - HALL SUP (3).jpg',  thumb:'assets/thumbs/imagens/areas comuns/rihva - 02 - hall sup (3).jpg' },
 
-    // ═══ LAZER › PÁTIO INTERNO ═══════════════════════════════════
-    { id:34, type:'image', category:'lazer', subCategory:'lazer-patio', title:'Pátio Interno — Lounge',        src:'assets/imagens/lazer/patio/patio-lounge.jpg',        thumb:'assets/thumbs/imagens/lazer/patio/patio-lounge.jpg' },
-    { id:35, type:'image', category:'lazer', subCategory:'lazer-patio', title:'Pátio Interno — Jardim',        src:'assets/imagens/lazer/patio/patio-jardim.jpg',        thumb:'assets/thumbs/imagens/lazer/patio/patio-jardim.jpg' },
-    { id:36, type:'image', category:'lazer', subCategory:'lazer-patio', title:'Pátio Interno — Espelho d\'Água', src:'assets/imagens/lazer/patio/patio-espelho-dagua.jpg', thumb:'assets/thumbs/imagens/lazer/patio/patio-espelho-dagua.jpg' },
+    // ═══ ÁREAS COMUNS › SALÃO DE FESTAS ═══════════════════════════
+    { id:36, type:'image', category:'areas-comuns', subCategory:'ac-salao', title:'Salão de Festas — Vista 1', src:'assets/imagens/areas comuns/RIHVA - 03 - SALÃO DE FESTAS (1)22233.jpg', thumb:'assets/thumbs/imagens/areas comuns/rihva - 03 - salão de festas (1)22233.jpg' },
+    { id:37, type:'image', category:'areas-comuns', subCategory:'ac-salao', title:'Salão de Festas — Vista 2', src:'assets/imagens/areas comuns/RIHVA - 03 - SALÃO DE FESTAS (2).jpg',      thumb:'assets/thumbs/imagens/areas comuns/rihva - 03 - salão de festas (2).jpg' },
+    { id:38, type:'image', category:'areas-comuns', subCategory:'ac-salao', title:'Salão de Festas — Vista 3', src:'assets/imagens/areas comuns/RIHVA - 03 - SALÃO DE FESTAS (3)22.jpg',    thumb:'assets/thumbs/imagens/areas comuns/rihva - 03 - salão de festas (3)22.jpg' },
+    { id:39, type:'image', category:'areas-comuns', subCategory:'ac-salao', title:'Salão de Festas — Vista 4', src:'assets/imagens/areas comuns/RIHVA - 03 - SALÃO DE FESTAS (4).jpg',      thumb:'assets/thumbs/imagens/areas comuns/rihva - 03 - salão de festas (4).jpg' },
 
-    // ═══ LAZER › PRAÇA (praça de gentileza urbana) ══════════════
-    { id:37, type:'image', category:'lazer', subCategory:'lazer-praca', title:'Praça de Gentileza Urbana',            src:'assets/imagens/lazer/praca/praca-gentileza-01.jpg', thumb:'assets/thumbs/imagens/lazer/praca/praca-gentileza-01.jpg' },
-    { id:38, type:'image', category:'lazer', subCategory:'lazer-praca', title:'Praça de Gentileza Urbana — Detalhe',  src:'assets/imagens/lazer/praca/praca-gentileza-02.jpg', thumb:'assets/thumbs/imagens/lazer/praca/praca-gentileza-02.jpg' },
+    // ═══ ÁREAS COMUNS › GOURMET ═══════════════════════════════════
+    { id:40, type:'image', category:'areas-comuns', subCategory:'ac-gourmet', title:'Espaço Gourmet — Vista 1', src:'assets/imagens/areas comuns/RIHVA - 04 - GOURMET (1).jpeg', thumb:'assets/thumbs/imagens/areas comuns/rihva - 04 - gourmet (1).jpg' },
+    { id:41, type:'image', category:'areas-comuns', subCategory:'ac-gourmet', title:'Espaço Gourmet — Vista 2', src:'assets/imagens/areas comuns/RIHVA - 04 - GOURMET (2).jpg',  thumb:'assets/thumbs/imagens/areas comuns/rihva - 04 - gourmet (2).jpg' },
 
-    // ═══ LAZER › GOURMET (rooftop + salão) ══════════════════════
-    { id:39, type:'image', category:'lazer', subCategory:'lazer-gourmet', title:'Terraço Gourmet — Vista Panorâmica', src:'assets/imagens/lazer/gourmet/gourmet-terraco.jpg',         thumb:'assets/thumbs/imagens/lazer/gourmet/gourmet-terraco.jpg' },
-    { id:40, type:'image', category:'lazer', subCategory:'lazer-gourmet', title:'Espaço Gourmet — Churrasqueira',     src:'assets/imagens/lazer/gourmet/gourmet-churrasqueira.jpg',   thumb:'assets/thumbs/imagens/lazer/gourmet/gourmet-churrasqueira.jpg' },
-    { id:41, type:'image', category:'lazer', subCategory:'lazer-gourmet', title:'Espaço Gourmet — Mesa Comunitária',  src:'assets/imagens/lazer/gourmet/gourmet-mesa-comunitaria.jpg', thumb:'assets/thumbs/imagens/lazer/gourmet/gourmet-mesa-comunitaria.jpg' },
-    { id:42, type:'image', category:'lazer', subCategory:'lazer-gourmet', title:'Espaço Gourmet — Salão',             src:'assets/imagens/lazer/gourmet/gourmet-salao.jpg',           thumb:'assets/thumbs/imagens/lazer/gourmet/gourmet-salao.jpg' },
+    // ═══ ÁREAS COMUNS › ACADEMIA ═══════════════════════════════════
+    { id:42, type:'image', category:'areas-comuns', subCategory:'ac-academia', title:'Academia — Vista 1', src:'assets/imagens/areas comuns/RIHVA - 05 - ACADEMIA (1).jpg', thumb:'assets/thumbs/imagens/areas comuns/rihva - 05 - academia (1).jpg' },
+    { id:43, type:'image', category:'areas-comuns', subCategory:'ac-academia', title:'Academia — Vista 2', src:'assets/imagens/areas comuns/RIHVA - 05 - ACADEMIA (2).jpg', thumb:'assets/thumbs/imagens/areas comuns/rihva - 05 - academia (2).jpg' },
 
-    // ═══ LAZER › KIDS & PLAYGROUND ═══════════════════════════════
-    { id:43, type:'image', category:'lazer', subCategory:'lazer-kids', title:'Playground',   src:'assets/imagens/lazer/kids/playground.jpg',   thumb:'assets/thumbs/imagens/lazer/kids/playground.jpg' },
-    { id:44, type:'image', category:'lazer', subCategory:'lazer-kids', title:'Espaço Kids',  src:'assets/imagens/lazer/kids/espaco-kids.jpg',  thumb:'assets/thumbs/imagens/lazer/kids/espaco-kids.jpg' },
+    // ═══ ÁREAS COMUNS › SALA DE JOGOS ═══════════════════════════════
+    { id:44, type:'image', category:'areas-comuns', subCategory:'ac-jogos', title:'Sala de Jogos', src:'assets/imagens/areas comuns/RIHVA - 06 - JOGOS.jpeg', thumb:'assets/thumbs/imagens/areas comuns/rihva - 06 - jogos.jpg' },
 
-    // ═══ LAZER › ÁREAS COMUNS (jogos, academia, recepção) ═══════
-    { id:45, type:'image', category:'lazer', subCategory:'lazer-comum', title:'Sala de Jogos', src:'assets/imagens/lazer/comum/sala-de-jogos.jpg', thumb:'assets/thumbs/imagens/lazer/comum/sala-de-jogos.jpg' },
-    { id:46, type:'image', category:'lazer', subCategory:'lazer-comum', title:'Academia',      src:'assets/imagens/lazer/comum/academia.jpg',      thumb:'assets/thumbs/imagens/lazer/comum/academia.jpg' },
-    { id:47, type:'image', category:'lazer', subCategory:'lazer-comum', title:'Recepção',      src:'assets/imagens/lazer/comum/recepcao.jpg',      thumb:'assets/thumbs/imagens/lazer/comum/recepcao.jpg' },
+    // ═══ ÁREAS COMUNS › PET PLACE ═══════════════════════════════════
+    { id:45, type:'image', category:'areas-comuns', subCategory:'ac-pet', title:'Pet Place — Vista 1', src:'assets/imagens/areas comuns/RIHVA - 07 - PET PLACE (1).jpg', thumb:'assets/thumbs/imagens/areas comuns/rihva - 07 - pet place (1).jpg' },
+    { id:46, type:'image', category:'areas-comuns', subCategory:'ac-pet', title:'Pet Place — Vista 2', src:'assets/imagens/areas comuns/RIHVA - 07 - PET PLACE (2).jpg', thumb:'assets/thumbs/imagens/areas comuns/rihva - 07 - pet place (2).jpg' },
 
-    // ═══ RESIDÊNCIAS › APARTAMENTO 103 ═══════════════════════════
-    { id:50, type:'image', category:'residencial', subCategory:'res-103', title:'Sala de Estar', src:'assets/imagens/residencial/apto-103/sala.jpg',   thumb:'assets/thumbs/imagens/residencial/apto-103/sala.jpg' },
-    { id:51, type:'image', category:'residencial', subCategory:'res-103', title:'Quarto',        src:'assets/imagens/residencial/apto-103/quarto.jpg', thumb:'assets/thumbs/imagens/residencial/apto-103/quarto.jpg' },
+    // ═══ ÁREAS COMUNS › PISCINA ═══════════════════════════════════
+    { id:47, type:'image', category:'areas-comuns', subCategory:'ac-piscina', title:'Piscina — Vista 1', src:'assets/imagens/areas comuns/RIHVA - 08 - PISCINA (1).jpg',  thumb:'assets/thumbs/imagens/areas comuns/rihva - 08 - piscina (1).jpg' },
+    { id:48, type:'image', category:'areas-comuns', subCategory:'ac-piscina', title:'Piscina — Vista 2', src:'assets/imagens/areas comuns/RIHVA - 08 - PISCINA (2).jpg',  thumb:'assets/thumbs/imagens/areas comuns/rihva - 08 - piscina (2).jpg' },
+    { id:49, type:'image', category:'areas-comuns', subCategory:'ac-piscina', title:'Piscina — Vista 3', src:'assets/imagens/areas comuns/RIHVA - 08 - PISCINA (3).jpeg', thumb:'assets/thumbs/imagens/areas comuns/rihva - 08 - piscina (3).jpg' },
 
-    // ═══ RESIDÊNCIAS › APARTAMENTO 106 · GARDEN ══════════════════
-    { id:52, type:'image', category:'residencial', subCategory:'res-106', title:'Sala Ampliada',   src:'assets/imagens/residencial/apto-106/sala-ampliada.jpg', thumb:'assets/thumbs/imagens/residencial/apto-106/sala-ampliada.jpg' },
-    { id:53, type:'image', category:'residencial', subCategory:'res-106', title:'Garden Privativo', src:'assets/imagens/residencial/apto-106/garden.jpg',       thumb:'assets/thumbs/imagens/residencial/apto-106/garden.jpg' },
+    // ═══ ÁREAS COMUNS › ÁREA EXTERNA ═══════════════════════════════
+    { id:50, type:'image', category:'areas-comuns', subCategory:'ac-externo', title:'Área Externa — Vista 1', src:'assets/imagens/areas comuns/RIHVA - 09 - EXTERNO (1).jpg', thumb:'assets/thumbs/imagens/areas comuns/rihva - 09 - externo (1).jpg' },
+    { id:51, type:'image', category:'areas-comuns', subCategory:'ac-externo', title:'Área Externa — Vista 2', src:'assets/imagens/areas comuns/RIHVA - 09 - EXTERNO (2).jpg', thumb:'assets/thumbs/imagens/areas comuns/rihva - 09 - externo (2).jpg' },
+    { id:52, type:'image', category:'areas-comuns', subCategory:'ac-externo', title:'Área Externa — Vista 3', src:'assets/imagens/areas comuns/RIHVA - 09 - EXTERNO (3).jpg', thumb:'assets/thumbs/imagens/areas comuns/rihva - 09 - externo (3).jpg' },
 
-    // ═══ PLANTAS › IMPLANTAÇÕES (sobreposição de pavimentos — subsolo à cobertura) ═══
-    { id:80, type:'cobertura-plan', category:'plantas', subCategory:'pl-implantacoes',
-      title:'Implantações', subtitle:'Subsolo à cobertura', area:'', floors:[
-        { label:'Subsolo',    src:'assets/plantas/implantacoes/subsolo.jpg',     thumb:'assets/thumbs/plantas/implantacoes/subsolo.jpg' },
-        { label:'Térreo',     src:'assets/plantas/implantacoes/terreo.jpg',      thumb:'assets/thumbs/plantas/implantacoes/terreo.jpg' },
-        { label:'1º Pav.',    src:'assets/plantas/implantacoes/pavimento-01.jpg', thumb:'assets/thumbs/plantas/implantacoes/pavimento-01.jpg' },
-        { label:'2º Pav.',    src:'assets/plantas/implantacoes/pavimento-02.jpg', thumb:'assets/thumbs/plantas/implantacoes/pavimento-02.jpg' },
-        { label:'3º Pav.',    src:'assets/plantas/implantacoes/pavimento-03.jpg', thumb:'assets/thumbs/plantas/implantacoes/pavimento-03.jpg' },
-        { label:'4º Pav.',    src:'assets/plantas/implantacoes/pavimento-04.jpg', thumb:'assets/thumbs/plantas/implantacoes/pavimento-04.jpg' },
-        { label:'5º Pav.',    src:'assets/plantas/implantacoes/pavimento-05.jpg', thumb:'assets/thumbs/plantas/implantacoes/pavimento-05.jpg' },
-        { label:'Cobertura',  src:'assets/plantas/implantacoes/cobertura.jpg',    thumb:'assets/thumbs/plantas/implantacoes/cobertura.jpg' },
-    ]},
+    // ═══ ÁREAS COMUNS › DELIVERY ═══════════════════════════════════
+    { id:53, type:'image', category:'areas-comuns', subCategory:'ac-delivery', title:'Espaço Delivery', src:'assets/imagens/areas comuns/RIHVA - 10 - DELIVERY.png', thumb:'assets/thumbs/imagens/areas comuns/rihva - 10 - delivery.jpg' },
 
-    // ═══ PLANTAS › APARTAMENTOS (unidades tipo, colunas 01–04) ══
-    { id:90, type:'image', category:'plantas', subCategory:'pl-unidades', isPlant:true, title:'Apartamento Coluna 01', subtitle:'68,71 m² · 2 dormitórios (1 suíte)', src:'assets/plantas/unidades/coluna-01.jpg', thumb:'assets/thumbs/plantas/unidades/coluna-01.jpg' },
-    { id:91, type:'image', category:'plantas', subCategory:'pl-unidades', isPlant:true, title:'Apartamento Coluna 02', subtitle:'68,59 m² · 2 suítes',                 src:'assets/plantas/unidades/coluna-02.jpg', thumb:'assets/thumbs/plantas/unidades/coluna-02.jpg' },
-    { id:92, type:'image', category:'plantas', subCategory:'pl-unidades', isPlant:true, title:'Apartamento Coluna 03', subtitle:'64,68 m² · 2 suítes',                 src:'assets/plantas/unidades/coluna-03.jpg', thumb:'assets/thumbs/plantas/unidades/coluna-03.jpg' },
-    { id:93, type:'image', category:'plantas', subCategory:'pl-unidades', isPlant:true, title:'Apartamento Coluna 04', subtitle:'85,19 m² · 3 dormitórios (2 suítes)', src:'assets/plantas/unidades/coluna-04.jpg', thumb:'assets/thumbs/plantas/unidades/coluna-04.jpg' },
+    // ═══ ÁREAS COMUNS › GARAGEM ═══════════════════════════════════
+    { id:54, type:'image', category:'areas-comuns', subCategory:'ac-garagem', title:'Garagem — Vista 1', src:'assets/imagens/areas comuns/RIHVA - 11 - GARAGEM (1).png', thumb:'assets/thumbs/imagens/areas comuns/rihva - 11 - garagem (1).jpg' },
+    { id:55, type:'image', category:'areas-comuns', subCategory:'ac-garagem', title:'Garagem — Vista 2', src:'assets/imagens/areas comuns/RIHVA - 11 - GARAGEM (2).png', thumb:'assets/thumbs/imagens/areas comuns/rihva - 11 - garagem (2).jpg' },
+    { id:56, type:'image', category:'areas-comuns', subCategory:'ac-garagem', title:'Garagem — Vista 3', src:'assets/imagens/areas comuns/RIHVA - 11 - GARAGEM (3).png', thumb:'assets/thumbs/imagens/areas comuns/rihva - 11 - garagem (3).jpg' },
 
-    // ═══ PLANTAS › APARTAMENTOS › COLUNA 06 · GARDEN (sobreposição padrão × sala ampliada) ═══
-    { id:95, type:'cobertura-plan', category:'plantas', subCategory:'pl-unidades',
-      title:'Apartamento Coluna 06 · Garden', subtitle:'91,00 m² + jardim privativo de 41,32 m²', area:'', viewBothLabel:'Sobrepor planta padrão e sala ampliada', floors:[
-        { label:'Planta Padrão', src:'assets/plantas/unidades/coluna-06-padrao.jpg',        thumb:'assets/thumbs/plantas/unidades/coluna-06-padrao.jpg' },
-        { label:'Sala Ampliada', src:'assets/plantas/unidades/coluna-06-sala-ampliada.jpg', thumb:'assets/thumbs/plantas/unidades/coluna-06-sala-ampliada.jpg' },
-    ]},
+    // ═══ PLANTAS (implantação humanizada, pavimento a pavimento) ═══
+    { id:90, type:'image', category:'plantas', isPlant:true, title:'Térreo',                       src:'assets/plantas/Humanizada - RIHVA - 01 - Térreo.png',              thumb:'assets/thumbs/plantas/humanizada - rihva - 01 - térreo.jpg' },
+    { id:91, type:'image', category:'plantas', isPlant:true, title:'Garagem G1',                   src:'assets/plantas/Humanizada - RIHVA - 02 - G1.png',                  thumb:'assets/thumbs/plantas/humanizada - rihva - 02 - g1.jpg' },
+    { id:92, type:'image', category:'plantas', isPlant:true, title:'Garagem G2',                   src:'assets/plantas/Humanizada - RIHVA - 03 - G2.png',                  thumb:'assets/thumbs/plantas/humanizada - rihva - 03 - g2.jpg' },
+    { id:93, type:'image', category:'plantas', isPlant:true, title:'Pavimento de Lazer',            src:'assets/plantas/Humanizada - RIHVA - 04 - Lazer.png',               thumb:'assets/thumbs/plantas/humanizada - rihva - 04 - lazer.jpg' },
+    { id:94, type:'image', category:'plantas', isPlant:true, title:'Apartamento Tipo',              src:'assets/plantas/Humanizada - RIHVA - 05 - Apto Tipo.png',           thumb:'assets/thumbs/plantas/humanizada - rihva - 05 - apto tipo.jpg' },
+    { id:95, type:'image', category:'plantas', isPlant:true, title:'Apartamento 01',                src:'assets/plantas/Humanizada - RIHVA - 06 - Apto 01.png',             thumb:'assets/thumbs/plantas/humanizada - rihva - 06 - apto 01.jpg' },
+    { id:96, type:'image', category:'plantas', isPlant:true, title:'Apartamento 02',                src:'assets/plantas/Humanizada - RIHVA - 07 - Apto 02.png',             thumb:'assets/thumbs/plantas/humanizada - rihva - 07 - apto 02.jpg' },
+    { id:97, type:'image', category:'plantas', isPlant:true, title:'Apartamento 03',                src:'assets/plantas/Humanizada - RIHVA - 08 - Apto 03.png',             thumb:'assets/thumbs/plantas/humanizada - rihva - 08 - apto 03.jpg' },
+    { id:98, type:'image', category:'plantas', isPlant:true, title:'Pavimento com Duplex',          src:'assets/plantas/Humanizada - RIHVA - 09 - Pavto com duplex.png',    thumb:'assets/thumbs/plantas/humanizada - rihva - 09 - pavto com duplex.jpg' },
+    { id:99, type:'image', category:'plantas', isPlant:true, title:'Duplex — Pavimento Inferior',   src:'assets/plantas/Humanizada - RIHVA - 10 - Duplex inferior.png',     thumb:'assets/thumbs/plantas/humanizada - rihva - 10 - duplex inferior.jpg' },
+    { id:100,type:'image', category:'plantas', isPlant:true, title:'Duplex — Pavimento Superior',   src:'assets/plantas/Humanizada - RIHVA - 11 - Duplex superior.png',     thumb:'assets/thumbs/plantas/humanizada - rihva - 11 - duplex superior.jpg' },
   ],
 };
 
@@ -1048,11 +1021,9 @@ const MODE = (() => {
 })();
 
 // Categorias exibidas no filtro principal conforme modo
+// (modo 'plantas' não tem sub-categorias — filtro principal fica oculto)
 const DISPLAY_CATS = (() => {
-  if (MODE === 'plantas') return [
-    { id: 'pl-implantacoes', label: 'Implantações' },
-    { id: 'pl-unidades',     label: 'Apartamentos' },
-  ];
+  if (MODE === 'plantas') return [];
   if (MODE === 'imagens') return GALLERY_CONFIG.categories.filter(c => c.id !== 'plantas');
   return GALLERY_CONFIG.categories;
 })();
@@ -1115,10 +1086,8 @@ function filteredItems() {
     if (MODE === 'plantas' && item.category !== 'plantas') return false;
     if (MODE === 'imagens' && item.category === 'plantas') return false;
 
-    // Filtro de categoria
-    if (MODE === 'plantas') {
-      if (item.subCategory !== st.cat) return false;
-    } else {
+    // Filtro de categoria (modo 'plantas' não tem sub-filtro — mostra tudo)
+    if (MODE !== 'plantas') {
       if (st.cat && item.category !== st.cat) return false;
       if (st.sub && item.subCategory !== st.sub) return false;
     }
@@ -1459,10 +1428,11 @@ function closeGallery() {
 
 // ── init ──────────────────────────────────────────────────────────
 function init() {
-  // Filtro inicial depende do modo
+  // Filtro inicial depende do modo (modo 'plantas' não tem filtro — mostra tudo)
   if (MODE === 'plantas') {
-    st.cat = 'pl-implantacoes';  // primeira tipologia de plantas
+    st.cat = null;
     st.sub = null;
+    $('g-filters').style.display = 'none';
   } else {
     st.cat = DISPLAY_CATS[0].id;               // 'fachada'
     const c0 = getCat(st.cat);
