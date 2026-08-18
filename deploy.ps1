@@ -99,7 +99,6 @@ else {
   Copy-Html 'index.html'
   Copy-Html 'inject.js'
   Copy-Html 'video-gallery.html'
-  Copy-Html 'fachada-interativa.html'
 }
 
 Write-Host 'Deploy concluido.' -ForegroundColor Green
