@@ -25,7 +25,7 @@
     overlay = d.createElement('div');
     overlay.id = '_gc_overlay';
     overlay.style.cssText =
-      'position:fixed;inset:0;z-index:2147483646;' +
+      'position:fixed;inset:0;z-index:2147483646;will-change:opacity;' +
       'animation:_gcIn 0.3s ease both;';
 
     var iframe = d.createElement('iframe');
@@ -49,12 +49,26 @@
 
   function _close() {
     if (!overlay) return;
-    overlay.style.animation = '_gcOut 0.25s ease forwards';
     var ref = overlay;
-    setTimeout(function () {
-      if (ref.parentNode) ref.parentNode.removeChild(ref);
-    }, 260);
     overlay = null;
+
+    ref.style.pointerEvents = 'none';
+    ref.style.animation = '_gcOut 0.2s ease forwards';
+
+    // Descarrega o iframe já (a galeria pode ser pesada) para não travar
+    // a thread principal só no momento da remoção do overlay.
+    var iframe = ref.querySelector('iframe');
+    if (iframe) iframe.src = 'about:blank';
+
+    var removed = false;
+    function remove() {
+      if (removed) return;
+      removed = true;
+      if (ref.parentNode) ref.parentNode.removeChild(ref);
+    }
+    ref.addEventListener('animationend', remove, { once: true });
+    setTimeout(remove, 260); // fallback caso o evento não dispare
+
     if (msgHandler) {
       w.removeEventListener('message', msgHandler);
       msgHandler = null;
