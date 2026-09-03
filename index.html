@@ -271,17 +271,8 @@
     .g-card.loaded:hover .card-zoom { opacity: 1; transform: scale(1); }
 
     /* Plant card */
-    .g-card.is-plant { background: var(--white); }
+    .g-card.is-plant { background: transparent; }
     .g-card.is-plant img { object-fit: contain; padding: 12px; }
-    .g-card.is-plant::before {
-      background: linear-gradient(
-        90deg,
-        rgba(0,0,0,0.04) 0%,
-        rgba(0,0,0,0.09) 40%,
-        rgba(0,0,0,0.04) 80%
-      );
-      background-size: 800px 100%;
-    }
 
     /* ── COBERTURA SPECIAL CARD ── */
     .g-card.cob-card {
@@ -886,7 +877,7 @@ const GALLERY_CONFIG = {
         { id: 'ac-hall-inf',  label: 'Hall de Entrada' },
         { id: 'ac-hall-sup',  label: 'Hall Superior' },
         { id: 'ac-salao',     label: 'Salão de Festas' },
-        { id: 'ac-gourmet',   label: 'Gourmet' },
+        { id: 'ac-gourmet',   label: 'Espaço Gourmet' },
         { id: 'ac-academia',  label: 'Academia' },
         { id: 'ac-jogos',     label: 'Sala de Jogos' },
         { id: 'ac-pet',       label: 'Pet Place' },
@@ -974,17 +965,17 @@ const GALLERY_CONFIG = {
     { id:56, type:'image', category:'areas-comuns', subCategory:'ac-garagem', title:'Garagem — Vista 3', src:'assets/imagens/areas comuns/RIHVA - 11 - GARAGEM (3).png', thumb:'assets/thumbs/imagens/areas comuns/rihva - 11 - garagem (3).jpg' },
 
     // ═══ PLANTAS (implantação humanizada, pavimento a pavimento) ═══
-    { id:90, type:'image', category:'plantas', isPlant:true, title:'Térreo',                       src:'assets/plantas/Humanizada - RIHVA - 01 - Térreo.png',              thumb:'assets/thumbs/plantas/humanizada - rihva - 01 - térreo.jpg' },
-    { id:91, type:'image', category:'plantas', isPlant:true, title:'Garagem G1',                   src:'assets/plantas/Humanizada - RIHVA - 02 - G1.png',                  thumb:'assets/thumbs/plantas/humanizada - rihva - 02 - g1.jpg' },
-    { id:92, type:'image', category:'plantas', isPlant:true, title:'Garagem G2',                   src:'assets/plantas/Humanizada - RIHVA - 03 - G2.png',                  thumb:'assets/thumbs/plantas/humanizada - rihva - 03 - g2.jpg' },
-    { id:93, type:'image', category:'plantas', isPlant:true, title:'Pavimento de Lazer',            src:'assets/plantas/Humanizada - RIHVA - 04 - Lazer.png',               thumb:'assets/thumbs/plantas/humanizada - rihva - 04 - lazer.jpg' },
-    { id:94, type:'image', category:'plantas', isPlant:true, title:'Apartamento Tipo',              src:'assets/plantas/Humanizada - RIHVA - 05 - Apto Tipo.png',           thumb:'assets/thumbs/plantas/humanizada - rihva - 05 - apto tipo.jpg' },
-    { id:95, type:'image', category:'plantas', isPlant:true, title:'Apartamento 01',                src:'assets/plantas/Humanizada - RIHVA - 06 - Apto 01.png',             thumb:'assets/thumbs/plantas/humanizada - rihva - 06 - apto 01.jpg' },
-    { id:96, type:'image', category:'plantas', isPlant:true, title:'Apartamento 02',                src:'assets/plantas/Humanizada - RIHVA - 07 - Apto 02.png',             thumb:'assets/thumbs/plantas/humanizada - rihva - 07 - apto 02.jpg' },
-    { id:97, type:'image', category:'plantas', isPlant:true, title:'Apartamento 03',                src:'assets/plantas/Humanizada - RIHVA - 08 - Apto 03.png',             thumb:'assets/thumbs/plantas/humanizada - rihva - 08 - apto 03.jpg' },
-    { id:98, type:'image', category:'plantas', isPlant:true, title:'Pavimento com Duplex',          src:'assets/plantas/Humanizada - RIHVA - 09 - Pavto com duplex.png',    thumb:'assets/thumbs/plantas/humanizada - rihva - 09 - pavto com duplex.jpg' },
-    { id:99, type:'image', category:'plantas', isPlant:true, title:'Duplex — Pavimento Inferior',   src:'assets/plantas/Humanizada - RIHVA - 10 - Duplex inferior.png',     thumb:'assets/thumbs/plantas/humanizada - rihva - 10 - duplex inferior.jpg' },
-    { id:100,type:'image', category:'plantas', isPlant:true, title:'Duplex — Pavimento Superior',   src:'assets/plantas/Humanizada - RIHVA - 11 - Duplex superior.png',     thumb:'assets/thumbs/plantas/humanizada - rihva - 11 - duplex superior.jpg' },
+    { id:90, type:'image', category:'plantas', isPlant:true, title:'Térreo',                       src:'assets/plantas/Humanizada - RIHVA - 01 - Térreo.png',              thumb:'assets/thumbs/plantas/humanizada - rihva - 01 - térreo.png' },
+    { id:91, type:'image', category:'plantas', isPlant:true, title:'Garagem G1',                   src:'assets/plantas/Humanizada - RIHVA - 02 - G1.png',                  thumb:'assets/thumbs/plantas/humanizada - rihva - 02 - g1.png' },
+    { id:92, type:'image', category:'plantas', isPlant:true, title:'Garagem G2',                   src:'assets/plantas/Humanizada - RIHVA - 03 - G2.png',                  thumb:'assets/thumbs/plantas/humanizada - rihva - 03 - g2.png' },
+    { id:93, type:'image', category:'plantas', isPlant:true, title:'Pavimento de Lazer',            src:'assets/plantas/Humanizada - RIHVA - 04 - Lazer.png',               thumb:'assets/thumbs/plantas/humanizada - rihva - 04 - lazer.png' },
+    { id:94, type:'image', category:'plantas', isPlant:true, title:'Apartamento Tipo',              src:'assets/plantas/Humanizada - RIHVA - 05 - Apto Tipo.png',           thumb:'assets/thumbs/plantas/humanizada - rihva - 05 - apto tipo.png' },
+    { id:95, type:'image', category:'plantas', isPlant:true, title:'Andar tipo 01',                src:'assets/plantas/Humanizada - RIHVA - 06 - Apto 01.png',             thumb:'assets/thumbs/plantas/humanizada - rihva - 06 - apto 01.png' },
+    { id:96, type:'image', category:'plantas', isPlant:true, title:'Andar tipo 02',                src:'assets/plantas/Humanizada - RIHVA - 07 - Apto 02.png',             thumb:'assets/thumbs/plantas/humanizada - rihva - 07 - apto 02.png' },
+    { id:97, type:'image', category:'plantas', isPlant:true, title:'Andar tipo 03',                src:'assets/plantas/Humanizada - RIHVA - 08 - Apto 03.png',             thumb:'assets/thumbs/plantas/humanizada - rihva - 08 - apto 03.png' },
+    { id:98, type:'image', category:'plantas', isPlant:true, title:'Pavimento com Duplex',          src:'assets/plantas/Humanizada - RIHVA - 09 - Pavto com duplex.png',    thumb:'assets/thumbs/plantas/humanizada - rihva - 09 - pavto com duplex.png' },
+    { id:99, type:'image', category:'plantas', isPlant:true, title:'Duplex — Pavimento Inferior',   src:'assets/plantas/Humanizada - RIHVA - 10 - Duplex inferior.png',     thumb:'assets/thumbs/plantas/humanizada - rihva - 10 - duplex inferior.png' },
+    { id:100,type:'image', category:'plantas', isPlant:true, title:'Duplex — Pavimento Superior',   src:'assets/plantas/Humanizada - RIHVA - 11 - Duplex superior.png',     thumb:'assets/thumbs/plantas/humanizada - rihva - 11 - duplex superior.png' },
   ],
 };
 
