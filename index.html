@@ -620,6 +620,7 @@
     }
 
     /* Nav arrows */
+    #lb-nav-group { display: contents; }
     .lb-nav {
       position: absolute;
       top: 50%;
@@ -752,14 +753,26 @@
       /* lightbox */
       #lb-head { padding: 12px 14px; flex-wrap: wrap; gap: 8px; }
       #lb-title { font-size: 14px; }
-      #lb-body { padding: 0; }
+      #lb-body { flex-direction: column; padding: 0; }
 
-      /* arrows float over image on mobile */
+      /* arrows move below the image, centered, on mobile */
+      #lb-img, #lb-dual { order: 1; }
+      #lb-nav-group {
+        display: flex;
+        order: 2;
+        position: static;
+        justify-content: center;
+        align-items: center;
+        gap: 28px;
+        padding: 10px 0;
+        flex-shrink: 0;
+      }
       #lb-prev, #lb-next {
+        position: static;
+        top: auto; left: auto; right: auto;
+        transform: none;
         width: 46px; height: 46px;
       }
-      #lb-prev { left: 8px; }
-      #lb-next { right: 8px; }
 
       /* dual view stacks vertically on mobile */
       #lb-dual { flex-direction: column; gap: 12px; padding: 12px; }
@@ -834,7 +847,10 @@
     <button id="lb-close" aria-label="Fechar"></button>
   </div>
   <div id="lb-body">
-    <button id="lb-prev" class="lb-nav" aria-label="Anterior"></button>
+    <div id="lb-nav-group">
+      <button id="lb-prev" class="lb-nav" aria-label="Anterior"></button>
+      <button id="lb-next" class="lb-nav" aria-label="Próximo"></button>
+    </div>
     <img id="lb-img" src="" alt="">
     <div id="lb-dual">
       <div class="dual-col" id="dc-a">
@@ -846,7 +862,6 @@
         <img src="" alt="">
       </div>
     </div>
-    <button id="lb-next" class="lb-nav" aria-label="Próximo"></button>
   </div>
   <div id="lb-foot">
     <div id="lb-zoom-bar">
