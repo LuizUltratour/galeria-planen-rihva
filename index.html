@@ -638,9 +638,14 @@
     }
     .lb-nav:disabled { opacity: 0.18; cursor: default; }
     #lb-prev { left: 20px; background-image: url('assets/voltar-normal-dia.png'); }
-    #lb-prev:hover { background-image: url('assets/voltar-hover-dia.png'); }
     #lb-next { right: 20px; background-image: url('assets/proximo-normal-dia.png'); }
-    #lb-next:hover { background-image: url('assets/proximo-hover-dia.png'); }
+    #lb-prev.is-active { background-image: url('assets/voltar-hover-dia.png'); }
+    #lb-next.is-active { background-image: url('assets/proximo-hover-dia.png'); }
+    /* hover só em dispositivos com mouse real; em touch o :hover fica "grudado" após o toque */
+    @media (hover: hover) {
+      #lb-prev:hover { background-image: url('assets/voltar-hover-dia.png'); }
+      #lb-next:hover { background-image: url('assets/proximo-hover-dia.png'); }
+    }
 
     #lb-foot {
       padding: 12px 32px;
@@ -1405,6 +1410,11 @@ function updateLb(dir) {
   warmLbNeighbors();   // já deixa a próxima/anterior prontas em cache
 }
 
+function flashNav(btn) {
+  btn.classList.add('is-active');
+  setTimeout(() => btn.classList.remove('is-active'), 120);
+}
+
 function navLb(dir) {
   if (st.lbDual) return;
   const ni = st.lbIdx + dir;
@@ -1446,8 +1456,8 @@ function init() {
 
   $('btn-close').addEventListener('click', closeGallery);
   $('lb-close').addEventListener('click', closeLb);
-  elLbPrev.addEventListener('click', () => navLb(-1));
-  elLbNext.addEventListener('click', () => navLb(1));
+  elLbPrev.addEventListener('click', () => { flashNav(elLbPrev); navLb(-1); });
+  elLbNext.addEventListener('click', () => { flashNav(elLbNext); navLb(1); });
   $('lb-body').addEventListener('click', e => { if (e.target === $('lb-body')) closeLb(); });
 }
 
